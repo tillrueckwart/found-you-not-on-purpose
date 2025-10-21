@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Digitale Ausstellung – Dein Name</title>
+  <meta name="description" content="Digitale Ausstellung von [Dein Name]. Werke, Video und Kontakt auf einer Seite.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Digitale Ausstellung – Dein Name">
+  <meta property="og:description" content="Ausgewählte Arbeiten von [Dein Name].">
+  <meta property="og:image" content="https://placehold.co/1200x630/png">
+  <meta property="og:url" content="https://USERNAME.github.io/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://USERNAME.github.io/">
+
+  <style>
+    :root {
+      --bg: #0f1115;
+      --fg: #eef1f5;
+      --muted: #b3bcc8;
+      --card: #171a21;
+      --accent: #9fd4ff;
+      --maxw: 1000px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+      background: radial-gradient(1200px 800px at 80% -10%, #1a2030 0%, var(--bg) 55%);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { display: block; max-width: 100%; height: auto; border-radius: 16px; }
+
+    header {
+      position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px);
+      background: color-mix(in oklab, var(--bg), transparent 60%);
+      border-bottom: 1px solid color-mix(in oklab, var(--fg), transparent 85%);
+    }
+    .nav {
+      max-width: var(--maxw); margin: 0 auto; padding: 12px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { font-weight: 700; letter-spacing: .4px; }
+    .links { display: flex; gap: 16px; font-size: .95rem; }
+
+    .hero { max-width: var(--maxw); margin: 36px auto 8px; padding: 0 20px; }
+    h1 { font-size: clamp(2rem, 3.6vw, 3rem); margin: 0 0 8px; }
+    .subtitle { color: var(--muted); margin: 0 0 18px; }
+
+    .info { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 18px 0 26px; }
+    @media (min-width: 760px){ .info { grid-template-columns: 2fr 1fr; } }
+    .card { background: var(--card); border: 1px solid color-mix(in oklab, var(--fg), transparent 85%); padding: 18px; border-radius: 16px; }
+
+    .video .controls { display:flex; gap:10px; align-items:center; margin: 8px 0 14px; }
+    .video .grid { display: grid; gap: 14px; grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 900px){ .video .grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .map { max-width: var(--maxw); margin: 0 auto 42px; padding: 0 20px; }
+    .map iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 16px; }
+
+    footer { max-width: var(--maxw); margin: 30px auto 60px; padding: 0 20px; color: var(--muted); font-size: .95rem; }
+    .footer-grid { display: grid; gap: 10px; grid-template-columns: 1fr; }
+    @media (min-width: 760px){ .footer-grid { grid-template-columns: 1fr 1fr; } }
+
+    .btn {
+      display: inline-block; padding: 10px 14px; border-radius: 12px;
+      border: 1px solid color-mix(in oklab, var(--fg), transparent 80%);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--card), #000 6%), var(--card));
+      color: var(--fg); cursor: pointer;
+    }
+    .audio-toggle { position: fixed; right: 16px; bottom: 16px; z-index: 20;
+      border-radius: 999px; padding: 10px 14px; border: 1px solid color-mix(in oklab, var(--fg), transparent 80%);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--card), #000 6%), var(--card));
+      color: var(--fg); cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="brand">Dein Name</div>
+      <div class="links">
+        <a href="#werke">Werke</a>
+        <a href="#video">Video</a>
+        <a href="#map">Karte</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hintergrundmusik -->
+  <button class="audio-toggle" id="audioToggle" aria-pressed="false">▶ Musik</button>
+  <audio id="bg-audio" src="assets/audio.mp3" preload="none" loop></audio>
+
+  <main>
+    <section class="hero" id="intro">
+      <h1>Digitale Ausstellung: Titel der Arbeit</h1>
+      <p class="subtitle">Kurzer Beschreibungstext deiner Arbeit (1–2 Sätze).</p>
+    </section>
+
+    <!-- VIDEOS -->
+    <section class="video" id="video">
+      <h2>Video (bis zu 16 Einbettungen – Einzelstart oder Parallel-Loop)</h2>
+      <p class="subtitle">Standard: Klick-zum-Laden. Alternativ kannst du alle Videos gleichzeitig stumm im Loop starten.</p>
+      <div class="controls">
+        <button class="btn" id="startAll">▶ Alle starten (muted + loop)</button>
+        <button class="btn" id="stopAll">⏹ Alle stoppen</button>
+      </div>
+      <div class="grid" id="videoGrid">
+        <!-- Beispielkacheln: Ersetze data-provider und data-id -->
+        <button class="card" data-provider="vimeo" data-id="76979871" data-thumb="https://i.vimeocdn.com/video/452001751-640.jpg">
+          <img src="h
