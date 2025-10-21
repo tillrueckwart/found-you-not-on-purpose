@@ -4,9 +4,246 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Digitale Ausstellung – Dein Name</title>
+  <meta name="description" content="Digitale Ausstellung von [Dein Name]. Werke, Video und Kontakt auf einer Seite.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Digitale Ausstellung – Dein Name">
+  <meta property="og:description" content="Ausgewählte Arbeiten von [Dein Name].">
+  <meta property="og:image" content="https://placehold.co/1200x630/png">
+  <meta property="og:url" content="https://USERNAME.github.io/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://USERNAME.github.io/">
+
+  <style>
+    :root {
+      --bg: #0f1115;
+      --fg: #eef1f5;
+      --muted: #b3bcc8;
+      --card: #171a21;
+      --accent: #9fd4ff;
+      --maxw: 1000px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+      background: radial-gradient(1200px 800px at 80% -10%, #1a2030 0%, var(--bg) 55%);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { display: block; max-width: 100%; height: auto; border-radius: 16px; }
+
+    header {
+      position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px);
+      background: color-mix(in oklab, var(--bg), transparent 60%);
+      border-bottom: 1px solid color-mix(in oklab, var(--fg), transparent 85%);
+    }
+    .nav {
+      max-width: var(--maxw); margin: 0 auto; padding: 12px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { font-weight: 700; letter-spacing: .4px; }
+    .links { display: flex; gap: 16px; font-size: .95rem; }
+
+    .hero { max-width: var(--maxw); margin: 36px auto 8px; padding: 0 20px; }
+    h1 { font-size: clamp(2rem, 3.6vw, 3rem); margin: 0 0 8px; }
+    .subtitle { color: var(--muted); margin: 0 0 18px; }
+
+    .info { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 18px 0 26px; }
+    @media (min-width: 760px){ .info { grid-template-columns: 2fr 1fr; } }
+    .card { background: var(--card); border: 1px solid color-mix(in oklab, var(--fg), transparent 85%); padding: 18px; border-radius: 16px; }
+
+    .video .controls { display:flex; gap:10px; align-items:center; margin: 8px 0 14px; }
+    .video .grid { display: grid; gap: 14px; grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 900px){ .video .grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .map { max-width: var(--maxw); margin: 0 auto 42px; padding: 0 20px; }
+    .map iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 16px; }
+
+    footer { max-width: var(--maxw); margin: 30px auto 60px; padding: 0 20px; color: var(--muted); font-size: .95rem; }
+    .footer-grid { display: grid; gap: 10px; grid-template-columns: 1fr; }
+    @media (min-width: 760px){ .footer-grid { grid-template-columns: 1fr 1fr; } }
+
+    .btn {
+      display: inline-block; padding: 10px 14px; border-radius: 12px;
+      border: 1px solid color-mix(in oklab, var(--fg), transparent 80%);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--card), #000 6%), var(--card));
+      color: var(--fg); cursor: pointer;
+    }
+    .audio-toggle { position: fixed; right: 16px; bottom: 16px; z-index: 20;
+      border-radius: 999px; padding: 10px 14px; border: 1px solid color-mix(in oklab, var(--fg), transparent 80%);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--card), #000 6%), var(--card));
+      color: var(--fg); cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <h1>Digitale Ausstellung – Dein Name</h1>
-  <p>Dies ist eine einfache Startversion deiner Ausstellungsseite.</p>
+  <header>
+    <nav class="nav">
+      <div class="brand">Dein Name</div>
+      <div class="links">
+        <a href="#werke">Werke</a>
+        <a href="#video">Video</a>
+        <a href="#map">Karte</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hintergrundmusik -->
+  <button class="audio-toggle" id="audioToggle" aria-pressed="false">▶ Musik</button>
+  <audio id="bg-audio" src="assets/audio.mp3" preload="none" loop></audio>
+
+  <main>
+    <section class="hero" id="intro">
+      <h1>Digitale Ausstellung: Titel der Arbeit</h1>
+      <p class="subtitle">Kurzer Beschreibungstext deiner Arbeit (1–2 Sätze).</p>
+    </section>
+
+    <!-- VIDEOS -->
+    <section class="video" id="video">
+      <h2>Video (bis zu 16 Einbettungen – Einzelstart oder Parallel-Loop)</h2>
+      <p class="subtitle">Standard: Klick-zum-Laden. Alternativ kannst du alle Videos gleichzeitig stumm im Loop starten.</p>
+      <div class="controls">
+        <button class="btn" id="startAll">▶ Alle starten (muted + loop)</button>
+        <button class="btn" id="stopAll">⏹ Alle stoppen</button>
+      </div>
+      <div class="grid" id="videoGrid">
+        <!-- Beispielkacheln: Ersetze data-provider und data-id -->
+        <button class="card" data-provider="vimeo" data-id="76979871" data-thumb="https://i.vimeocdn.com/video/452001751-640.jpg">
+          <img src="https://i.vimeocdn.com/video/452001751-320.jpg" alt="Vorschaubild Video 1" loading="lazy">
+        </button>
+        <button class="card" data-provider="youtube" data-id="dQw4w9WgXcQ" data-thumb="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg">
+          <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="Vorschaubild Video 2" loading="lazy">
+        </button>
+        <!-- weitere bis zu 16 -->
+      </div>
+      <p class="subtitle">Hinweis: Autoplay funktioniert nur stumm; Ton kann pro Video manuell aktiviert werden.</p>
+    </section>
+
+    <!-- KARTE -->
+    <section class="map" id="map">
+      <h2>Ort / Karte (optional)</h2>
+      <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps?q=Berlin%20Galerie&output=embed"
+        title="Google Maps Einbettung"></iframe>
+    </section>
+  </main>
+
+  <footer id="kontakt">
+    <div class="footer-grid">
+      <div>
+        <strong>Kontakt</strong><br>
+        <a href="mailto:dein.name@example.com">dein.name@example.com</a><br>
+        Instagram: <a href="https://instagram.com/USERNAME">@USERNAME</a>
+      </div>
+      <div>
+        © <span id="year"></span> Dein Name. Alle Rechte vorbehalten.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Jahr automatisch aktualisieren
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Musiksteuerung
+    (function(){
+      const btn = document.getElementById('audioToggle');
+      const audio = document.getElementById('bg-audio');
+      if(!btn || !audio) return;
+
+      const wasOn = localStorage.getItem('bg-audio-on') === '1';
+      if(wasOn){ audio.play().then(()=>{btn.textContent='⏸ Musik';}).catch(()=>{}); }
+
+      btn.addEventListener('click', async ()=>{
+        if(audio.paused){
+          try {
+            await audio.play();
+            btn.textContent = '⏸ Musik';
+            localStorage.setItem('bg-audio-on','1');
+          } catch(e){ console.warn(e); }
+        } else {
+          audio.pause();
+          btn.textContent = '▶ Musik';
+          localStorage.setItem('bg-audio-on','0');
+        }
+      });
+    })();
+
+    // Video-Handling
+    (function(){
+      const grid = document.getElementById('videoGrid');
+      if(!grid) return;
+
+      function buildIframe(provider, id, opts={autoplay:true, muted:true, loop:false, controls:true}){
+        const iframe=document.createElement('iframe');
+        iframe.setAttribute('allow','autoplay; fullscreen; picture-in-picture');
+        iframe.setAttribute('allowfullscreen','');
+        iframe.style.width='100%';
+        iframe.style.aspectRatio='16/9';
+        iframe.style.border='0';
+        iframe.style.borderRadius='16px';
+        if(provider==='youtube'){
+          const base=`https://www.youtube-nocookie.com/embed/${id}`;
+          const params=new URLSearchParams({
+            autoplay:opts.autoplay?'1':'0',
+            mute:opts.muted?'1':'0',
+            loop:opts.loop?'1':'0',
+            playlist:opts.loop?id:undefined,
+            rel:'0',modestbranding:'1',playsinline:'1',
+            controls:opts.controls?'1':'0'
+          });
+          iframe.src=`${base}?${params.toString()}`;
+        }else{
+          const base=`https://player.vimeo.com/video/${id}`;
+          const params=new URLSearchParams({
+            autoplay:opts.autoplay?'1':'0',
+            muted:opts.muted?'1':'0',
+            loop:opts.loop?'1':'0',
+            background:(!opts.controls||opts.muted)?'1':'0',
+            dnt:'1'
+          });
+          iframe.src=`${base}?${params.toString()}`;
+        }
+        return iframe;
+      }
+
+      function unloadAllPlayers(){
+        grid.querySelectorAll('.is-playing, .is-loaded').forEach(card=>{
+          card.classList.remove('is-playing','is-loaded');
+          const old=card.querySelector('iframe');
+          if(old) old.remove();
+          const thumb=card.getAttribute('data-thumb');
+          card.innerHTML=thumb?`<img src=\"${thumb}\" alt=\"Vorschaubild\" loading=\"lazy\">`:'';
+        });
+      }
+
+      grid.addEventListener('click',(e)=>{
+        const btn=e.target.closest('button[data-provider]');
+        if(!btn)return;
+        const provider=btn.getAttribute('data-provider');
+        const id=btn.getAttribute('data-id');
+        const iframe=buildIframe(provider,id,{autoplay:true,muted:false,loop:false,controls:true});
+        btn.classList.add('is-playing');
+        btn.innerHTML='';
+        btn.appendChild(iframe);
+      });
+
+      document.getElementById('startAll')?.addEventListener('click',()=>{
+        grid.querySelectorAll('button[data-provider]').forEach(card=>{
+          const provider=card.getAttribute('data-provider');
+          const id=card.getAttribute('data-id');
+          const iframe=buildIframe(provider,id,{autoplay:true,muted:true,loop:true,controls:false});
+          card.classList.add('is-loaded');
+          card.innerHTML='';
+          card.appendChild(iframe);
+        });
+      });
+      document.getElementById('stopAll')?.addEventListener('click',unloadAllPlayers);
+    })();
+  </script>
 </body>
 </html>
