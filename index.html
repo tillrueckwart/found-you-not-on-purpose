@@ -114,7 +114,7 @@ section.image p {
 
   <!-- Hintergrundmusik -->
   <audio id="bgAudio" src="assets/stay-lnger-bug.mp3" loop preload="none"></audio>
-  <button id="audioToggle" aria-pressed="false">▶ Musik</button>
+  <button id="audioToggle" aria-pressed="false">▶ Music</button>
 
   <!-- 6 Bildabschnitte -->
  <section class="image" style="background-image:url('assets/Salty_Glitches_001.jpg')">
@@ -164,13 +164,7 @@ section.image p {
  <section id="videos">
   <div id="videowall">
  
-    <iframe 
-  src="https://www.youtube.com/embed/i6nbnUMZO70?autoplay=1&mute=1&loop=1&playlist=i6nbnUMZO70&controls=0&modestbranding=0&disablekb=1&playsinline=1" 
-  width="560" height="315"
-  allow="autoplay; fullscreen"
-  allowfullscreen
-  style="border:0; pointer-events:none; user-select:none;">
-</iframe>
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/i6nbnUMZO70?si=AEtyaYwPf0pGGOEj&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 <iframe 
   src="https://www.youtube.com/embed/i6nbnUMZO70?autoplay=1&mute=1&loop=1&playlist=i6nbnUMZO70&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
   width="560" height="315"
@@ -191,7 +185,8 @@ section.image p {
 
   <!-- Google Maps -->
   <section class="map" id="map">
-    <iframe src="https://www.google.com/maps/d/embed?mid=1IaK4HABt7e97oZ8lE0LZEVyYjUY-8F8J&ehbc=2E312F" width="860" height="860"></iframe>
+ <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps/d/embed?mid=1IaK4HABt7e97oZ8lE0LZEVyYjUY-8F8J&ehbc=2E312F" width="860" height="860"></iframe>
   </section>
 
   <script>
@@ -204,7 +199,7 @@ section.image p {
         try {
           await audio.play();
           playing = true;
-          btn.textContent = '⏸ Musik';
+          btn.textContent = '⏸ Music';
           btn.setAttribute('aria-pressed','true');
         } catch (err) {
           console.warn('Autoplay blockiert:', err);
@@ -212,7 +207,7 @@ section.image p {
       } else {
         audio.pause();
         playing = false;
-        btn.textContent = '▶ Musik';
+        btn.textContent = '▶ Music';
         btn.setAttribute('aria-pressed','false');
       }
     });
