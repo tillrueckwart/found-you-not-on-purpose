@@ -27,35 +27,31 @@
 
     /* --- Bild-Sections --- */
  /* --- Bild-Sections mit Parallax-Effekt --- */
+/* --- Bild-Sections --- */
 section.image {
   position: relative;
-  min-height: 120vh; /* etwas mehr für Scroll-Übergang */
+  min-height: 120vh; /* Scrollhöhe */
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  background: #000;
+  background: transparent;
   overflow: hidden;
 }
 
-section.image::before {
-  content: "";
-  position: fixed; /* wichtig: bleibt stehen beim Scrollen */
+/* globale Bildfläche */
+#background-layer {
+  position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-size: contain; /* ganze Arbeit sichtbar */
-  background-position: center center;
+  z-index: -1;
+  background-size: contain;
   background-repeat: no-repeat;
-  background-attachment: fixed; /* parallax artig */
+  background-position: center center;
+  background-color: #000;
+  transition: opacity 1.5s ease, background-image 1.5s ease;
   opacity: 0;
-  transition: opacity 1s ease;
-  z-index: 0;
 }
 
-/* Dynamisch aktives Bild */
-section.image.active::before {
-  opacity: 1;
-}
-
-/* Captions über Bild */
+/* Text-Overlay */
 section.image .caption {
   position: relative;
   z-index: 1;
@@ -66,8 +62,7 @@ section.image .caption {
   text-align: center;
   transform: translateY(50px);
   opacity: 0;
-  transition: opacity 1.8s ease;
-
+  transition: all 1.2s ease;
 }
 
 section.image.active .caption {
@@ -79,6 +74,7 @@ section.image h1 {
   margin: 0 0 1rem;
   font-size: clamp(2rem, 4vw, 3rem);
 }
+
 
 
 
@@ -129,6 +125,7 @@ section.image h1 {
   </style>
 </head>
 <body>
+  <div id="background-layer"></div>
 
   <!-- Hintergrundmusik -->
   <audio id="bgAudio" src="assets/stay-longer-bug-1.mp3" loop preload="none"></audio>
@@ -230,31 +227,36 @@ section.image h1 {
       }
     });
   </script>
-  <script>
-    // Scrolllistener für aktive Sections (Bild-Effekte)
-  const sections = document.querySelectorAll('section.image');
+ <script>
+const sections = document.querySelectorAll('section.image');
+const bgLayer = document.getElementById('background-layer');
 
-  function activateSection() {
-    let scrollY = window.scrollY;
-    sections.forEach((sec) => {
-      const rect = sec.getBoundingClientRect();
-      const top = rect.top;
-      const mid = window.innerHeight / 2;
-      if (top < mid && top + rect.height > mid) {
-        sec.classList.add('active');
-        const bg = sec.getAttribute('data-bg');
-        sec.style.setProperty('--bg-image', `url(${bg})`);
-        sec.style.setProperty('background-image', `url(${bg})`);
-        sec.style.setProperty('background-size', 'contain');
-        sec.style.setProperty('background-position', 'center center');
-      } else {
-        sec.classList.remove('active');
-      }
-    });
+function activateSection() {
+  let foundActive = false;
+  const mid = window.innerHeight / 2;
+
+  sections.forEach((sec) => {
+    const rect = sec.getBoundingClientRect();
+    const top = rect.top;
+    if (!foundActive && top < mid && top + rect.height > mid) {
+      foundActive = true;
+      const bg = sec.getAttribute('data-bg');
+      sec.classList.add('active');
+      bgLayer.style.backgroundImage = `url(${bg})`;
+      bgLayer.style.opacity = 1;
+    } else {
+      sec.classList.remove('active');
+    }
+  });
+
+  if (!foundActive) {
+    bgLayer.style.opacity = 0; // schwarzer Hintergrund zwischen Abschnitten
   }
+}
 
-  window.addEventListener('scroll', activateSection);
-  window.addEventListener('load', activateSection);
-        </script>
+window.addEventListener('scroll', activateSection);
+window.addEventListener('load', activateSection);
+</script>
+
 </body>
 </html>
