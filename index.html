@@ -47,54 +47,42 @@ section.intro {
 
 /* --- Bildabschnitte --- */
 /* --- Scrolltelling-Bildabschnitte --- */
+/* --- Scrolltelling mit fixiertem Bildhintergrund --- */
 section.image {
   position: relative;
-  min-height: 200vh;        /* sorgt für Scrollraum: Text läuft über Bild */
+  min-height: 200vh; /* sorgt für genug Scrollstrecke */
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  overflow: hidden;
-}
-
-/* das eigentliche Bild bleibt fixiert im Hintergrund */
-section.image::before {
-  content: "";
-  position: fixed;          /* bleibt beim Scrollen stehen */
-  inset: 0;
-  background-size: contain; /* oder cover, wenn das Bild den ganzen Screen füllen soll */
+  background-size: contain; /* oder cover, wenn du das Bild vollflächig willst */
   background-repeat: no-repeat;
   background-position: center;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  z-index: 0;
+  background-attachment: fixed; /* sorgt für "feststehendes" Bild */
+  transition: background-image 1s ease, opacity 1s ease;
 }
 
-/* aktives Bild einblenden */
-section.image.active::before {
-  opacity: 1;
-}
-
-/* Caption über dem fixierten Bild */
+/* Caption (Text) */
 section.image .caption {
   position: relative;
   z-index: 1;
   background: rgba(0,0,0,0.55);
-  color: #fff;
   padding: 2rem;
   border-radius: 12px;
   max-width: 700px;
   text-align: center;
+  color: #fff;
   margin-bottom: 15vh;
-  transform: translateY(50px);
   opacity: 0;
+  transform: translateY(50px);
   transition: all 1s ease;
 }
 
-/* wenn Abschnitt aktiv -> Caption sichtbar */
-section.image.active .caption {
-  transform: translateY(0);
+/* sanftes Einblenden der Caption beim Scrollen */
+section.image.visible .caption {
   opacity: 1;
+  transform: translateY(0);
 }
+
 
 
     /* --- Video-Wand --- */
