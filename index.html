@@ -35,7 +35,7 @@
 section.image img {
   position: absolute;
   inset: 0;
-  width: 100%;
+  width: 90%;
   height: 100%;
   object-fit: cover;
   z-index: 0; /* vorher -1 → jetzt 0 */
@@ -58,14 +58,14 @@ section.image .caption {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   grid-auto-rows: 180px;
   gap: 6px;
-  width: 100%;
+  width: 90%;
   height: 100vh;
   overflow: hidden;
   background: #000;
 }
 
 #videowall iframe {
-  width: 100%;
+  width: 90%;
   height: 100%;
   border: 0;
   pointer-events: none; /* ⛔ kein Klick */
@@ -105,48 +105,13 @@ section.image .caption {
   <button id="audioToggle" aria-pressed="false">▶ sound</button>
 
   <!-- 6 Bildabschnitte -->
- <section class="image" style="background-image:url('assets/Salty_Glitches_001.jpg')">
-  <div class="caption">
-    <h1>Salty Glitches 001</h1>
-    <p>Beschreibung oder Untertitel.</p>
-  </div>
-</section>
-
-<section class="image" style="background-image:url('assets/Salty_Glitches_002.jpg')">
-  <div class="caption">
-    <h1>Salty Glitches 002</h1>
-    <p>Beschreibung oder Untertitel.</p>
-  </div>
-</section>
-
-<section class="image" style="background-image:url('assets/Salty_Glitches_003.jpg')">
-  <div class="caption">
-    <h1>Salty Glitches 003</h1>
-    <p>Beschreibung oder Untertitel.</p>
-  </div>
-</section>
-
-<section class="image" style="background-image:url('assets/Salty_Glitches_004.jpg')">
-  <div class="caption">
-    <h1>Salty Glitches 004</h1>
-    <p><img src="assets/QR_Salty_Glitches_004.png" alt="QR-Code zur Arbeit" width="150"></p>
-  </div>
-</section>
-
-<section class="image" style="background-image:url('assets/Salty_Glitches_005.jpg')">
-  <div class="caption">
-    <h1>Salty Glitches 005</h1>
-    <p><img src="assets/QR_Salty_Glitches_005.png" alt="QR-Code zur Arbeit" width="150"></p>
-  </div>
-</section>
-
-<section class="image" style="background-image:url('assets/Salty_Glitches_006.jpg')">
-  <div class="caption">
-    <h1>Salty Glitches 006</h1>
-    <p><img src="assets/QR_Salty_Glitches_006.png" alt="QR-Code zur Arbeit" width="150"></p>
-  </div>
-</section>
-
+<section class="image"><img src="assets/Salty_Glitches_001.jpg" alt=""><div class="caption"><h1>Salty Glitches 001</h1><p>Beschreibung oder Untertitel.</p></div></section>
+  <section class="image"><img src="assets/Salty_Glitches_002.jpg" alt=""><div class="caption"><h1>Salty Glitches 002</h1><p>Beschreibung oder Untertitel.</p></div></section>
+  <section class="image"><img src="assets/Salty_Glitches_003.jpg" alt=""><div class="caption"><h1>Salty Glitches 003</h1><p>Beschreibung oder Untertitel.</p></div></section>
+  <section class="image"><img src="assets/Salty_Glitches_004.jpg" alt=""><div class="caption"><h1>Salty Glitches 004</h1><p>img src="assets/QR_Salty_Glitches_004.png" alt="QR-Code zur Arbeit" width="100"></p></div></section>
+  <section class="image"><img src="assets/Salty_Glitches_005.jpg" alt=""><div class="caption"><h1>Salty Glitches 005</h1><p>img src="assets/QR_Salty_Glitches_005.png" alt="QR-Code zur Arbeit" width="100"></p></div></section>
+  <section class="image"><img src="assets/Salty_Glitches_006.jpg" alt=""><div class="caption"><h1>Salty Glitches 006</h1><p>img src="assets/QR_Salty_Glitches_006.png" alt="QR-Code zur Arbeit" width="100"></p></div></section>
+ 
 
   <!-- Video-Wand -->
  <section id="videos">
