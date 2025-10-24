@@ -3,287 +3,145 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Orbital Mirage</title>
-  <meta name="description" content="Digitale Ausstellung von [Dein Name]. Werke, Video und Kontakt auf einer Seite.">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Digitale Ausstellung – Dein Name">
-  <meta property="og:description" content="Ausgewählte Arbeiten von [Dein Name].">
-  <meta property="og:image" content="https://placehold.co/1200x630/png">
-  <meta property="og:url" content="https://USERNAME.github.io/">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="https://USERNAME.github.io/">
-
+  <title>Scrolltelling – Ausstellung</title>
   <style>
-    :root {
-      --bg: #0f1115;
-      --fg: #eef1f5;
-      --muted: #b3bcc8;
-      --card: #171a21;
-      --accent: #9fd4ff;
-      --maxw: 1000px;
-    }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
+    html, body {
       margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
-      background: radial-gradient(1200px 800px at 80% -10%, #1a2030 0%, var(--bg) 55%);
-      color: var(--fg);
-      line-height: 1.6;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden;
+      background: #000;
+      color: #fff;
+      font-family: system-ui, sans-serif;
     }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    img { display: block; max-width: 100%; height: auto; border-radius: 16px; }
 
-    header {
-      position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px);
-      background: color-mix(in oklab, var(--bg), transparent 60%);
-      border-bottom: 1px solid color-mix(in oklab, var(--fg), transparent 85%);
+    section {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
-    .nav {
-      max-width: var(--maxw); margin: 0 auto; padding: 12px 20px;
-      display: flex; align-items: center; justify-content: space-between;
+
+    /* --- Bild-Sections --- */
+    section.image img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.8);
+      transition: transform 20s ease;
     }
-    .brand { font-weight: 700; letter-spacing: .4px; }
-    .links { display: flex; gap: 16px; font-size: .95rem; }
 
-    .hero { max-width: var(--maxw); margin: 36px auto 8px; padding: 0 20px; }
-    h1 { font-size: clamp(2rem, 3.6vw, 3rem); margin: 0 0 8px; }
-    .subtitle { color: var(--muted); margin: 0 0 18px; }
-
-    .info { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 18px 0 26px; }
-    @media (min-width: 760px){ .info { grid-template-columns: 2fr 1fr; } }
-    .card { background: var(--card); border: 1px solid color-mix(in oklab, var(--fg), transparent 85%); padding: 18px; border-radius: 16px; }
-
-    .video .controls { max-width: var(--maxw); margin: 36px auto 8px; padding: 0 20px; }
-    .video .grid { display: grid; gap: 14px; grid-template-columns: repeat(2, 1fr); }
-    @media (min-width: 900px){ .video .grid { grid-template-columns: repeat(4, 1fr); } }
-
-    .map { max-width: var(--maxw); margin: 0 auto 42px; padding: 0 20px; }
-    .map iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 16px; }
-
-    footer { max-width: var(--maxw); margin: 30px auto 60px; padding: 0 20px; color: var(--muted); font-size: .95rem; }
-    .footer-grid { display: grid; gap: 10px; grid-template-columns: 1fr; }
-    @media (min-width: 760px){ .footer-grid { grid-template-columns: 1fr 1fr; } }
-
-    .btn {
-      display: inline-block; padding: 10px 14px; border-radius: 12px;
-      border: 1px solid color-mix(in oklab, var(--fg), transparent 80%);
-      background: linear-gradient(180deg, color-mix(in oklab, var(--card), #000 6%), var(--card));
-      color: var(--fg); cursor: pointer;
+    section.image:hover img {
+      transform: scale(1.05);
     }
-    .audio-toggle { position: fixed; right: 16px; bottom: 16px; z-index: 20;
-      border-radius: 999px; padding: 10px 14px; border: 1px solid color-mix(in oklab, var(--fg), transparent 80%);
-      background: linear-gradient(180deg, color-mix(in oklab, var(--card), #000 6%), var(--card));
-      color: var(--fg); cursor: pointer;
+
+    section.image .caption {
+      text-align: center;
+      max-width: 800px;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.45);
+      border-radius: 1rem;
+    }
+
+    /* --- Video-Wand --- */
+    #videowall {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-auto-rows: 200px;
+      gap: 6px;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+    }
+
+    #videowall iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      object-fit: cover;
+    }
+
+    /* --- Google Maps --- */
+    section.map iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      filter: grayscale(100%) brightness(0.8);
+    }
+
+    /* --- Audio Toggle Button --- */
+    #audioToggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      border: 1px solid #999;
+      cursor: pointer;
+      font-size: 1rem;
     }
   </style>
 </head>
 <body>
-  <header>
-    <nav class="nav">
-      <div class="brand">Till Rückwart</div>
-      <div class="links">
-        <a href="#werke">Works</a>
-        <a href="#video">Video</a>
-        <a href="#map">Map</a>
-        <a href="#kontakt">Contact</a>
-      </div>
-    </nav>
-  </header>
 
   <!-- Hintergrundmusik -->
-  <button class="audio-toggle" id="audioToggle" aria-pressed="false">▶ Musik</button>
-  <audio id="bg-audio" src="assets/audio.mp3" preload="none" loop></audio>
+  <audio id="bgAudio" src="assets/stay-lnger-bug.mp3" loop preload="none"></audio>
+  <button id="audioToggle" aria-pressed="false">▶ Musik</button>
 
-  <main>
-    <section class="hero" id="intro">
-      <h1>Salty Glitches</h1>
-      <p class="subtitle">The Salty Glitches Series is the starting point of a counter-mapping project that uses 
-        Google Earth satellite imagery to problematize the notion of truth in digital media while drawing attention 
-        to zones of ecological disaster as part of our consumer society. The photographs therefore explore the 
-        relationship between technology, people and nature as revealed through digital errors. </p>
-      <section class="gallery" id="werke">
-  <div class="grid" style="align-items: start;">
-    <figure>
-      <img src="assets/Salty_Glitches_001.jpg" alt="xxx" loading="lazy">
-      <figcaption>Titel der Arbeit 1“, 2024, Pigmentdruck, 60×80 cm</figcaption>
-    </figure>
-  <figure>
-      <img src="assets/Salty_Glitches_002.jpg" alt="xxx" loading="lazy">
-      <figcaption>xxx</figcaption>
-    </figure>
-      <figure>
-      <img src="assets/Salty_Glitches_003.jpg" alt="xxx" loading="lazy" style="max-width:100%; border-radius:16px;">
-      <figcaption>xxx
-    <br>
-    <img src="assets/QR_Salty_Glitches_004.png" alt="QR-Code zur Arbeit" width="150" height="150">
-  </figcaption>
-    </figure>
-    <figure style="display: flex; flex-direction: row; gap: 20px; align-items: flex-start;">
-      <img src="assets/Salty_Glitches_004.jpg" alt="xxx" loading="lazy" style="width:70%; border-radius:16px;">
-      <img src="assets/QR_Salty_Glitches_004.png" alt="QR-Code zu weiterführenden Infos" style="width:25%; max-width:200px;">
-      <figcaption>xxx</figcaption>
-    </figure>
-      <figure style="display: flex; flex-direction: row; gap: 20px; align-items: flex-start;">
-      <img src="assets/Salty_Glitches_005.jpg" alt="xxx" loading="lazy" style="width:70%; border-radius:16px;">
-      <img src="assets/QR_Salty_Glitches_005.png" alt="QR-Code zu weiterführenden Infos" style="width:25%; max-width:200px;">
-      <figcaption>xxx</figcaption>
-    </figure>
-       <figure style="display: flex; flex-direction: row; gap: 20px; align-items: flex-start;">
-      <img src="assets/Salty_Glitches_006.jpg" alt="xxx" loading="lazy" style="width:70%; border-radius:16px;">
-      <img src="assets/QR_Salty_Glitches_006.png" alt="QR-Code zu weiterführenden Infos" style="width:25%; max-width:200px;">
-      <figcaption>xxx</figcaption>
-    </figure>
+  <!-- 6 Bildabschnitte -->
+  <section class="image"><img src="assets/Salty_Glitches_001.jpg" alt=""><div class="caption"><h1>Salty Glitches 001</h1><p>Beschreibung oder Untertitel.</p></div></section>
+  <section class="image"><img src="assets/Salty_Glitches_002.jpg" alt=""><div class="caption"><h1>Salty Glitches 002</h1><p>Beschreibung oder Untertitel.</p></div></section>
+  <section class="image"><img src="assets/Salty_Glitches_003.jpg" alt=""><div class="caption"><h1>Salty Glitches 003</h1><p>Beschreibung oder Untertitel.</p></div></section>
+  <section class="image"><img src="assets/Salty_Glitches_004.jpg" alt=""><div class="caption"><h1>Salty Glitches 004</h1><p><img src="assets/QR_Salty_Glitches_004.png" alt="QR-Code zur Arbeit" width="150" height="150"></p></div></section>
+  <section class="image"><img src="assets/Salty_Glitches_005.jpg" alt=""><div class="caption"><h1>Salty Glitches 005</h1><p><img src="assets/QR_Salty_Glitches_005.png" alt="QR-Code zur Arbeit" width="150" height="150"></p></div></section>
+  <section class="image"><img src="assets/Salty_Glitches_006.jpg" alt=""><div class="caption"><h1>Salty Glitches 006</h1><p><img src="assets/QR_Salty_Glitches_006.png" alt="QR-Code zur Arbeit" width="150" height="150"></p></div></section>
+
+  <!-- Video-Wand -->
+ <section id="videos">
+  <div id="videowall">
+    <iframe src="https://www.youtube-nocookie.com/embed/i6nbnUMZO70?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ&controls=0&modestbranding=1&disablekb=1&playsinline=1"></iframe>
+    <iframe src="https://www.youtube-nocookie.com/embed/i6nbnUMZO70?autoplay=1&mute=1&loop=1&playlist=5NV6Rdv1a3I&controls=0&modestbranding=1&disablekb=1&playsinline=1"></iframe>
+    <iframe src="https://www.youtube-nocookie.com/embed/i6nbnUMZO70?autoplay=1&mute=1&loop=1&playlist=aqz-KE-bpKQ&controls=0&modestbranding=1&disablekb=1&playsinline=1"></iframe>
+    <!-- 13 weitere iframes mit deinen Video-IDs -->
   </div>
 </section>
 
-    </section>
-
-    <!-- VIDEOS -->
-    <section class="video" id="video">
-      <h2>stay a little longer, bug</h2>
-      <p class="subtitle">Standard: Klick-zum-Laden. Alternativ kannst du alle Videos gleichzeitig stumm im Loop starten.</p>
-      <div class="controls">
-        <button class="btn" id="startAll">▶ Alle starten (muted + loop)</button>
-        <button class="btn" id="stopAll">⏹ Alle stoppen</button>
-      </div>
-      <div class="grid" id="videoGrid">
-        <!-- Beispielkacheln: Ersetze data-provider und data-id -->
-        <button class="card" data-provider="vimeo" data-id="76979871" data-thumb="https://i.vimeocdn.com/video/452001751-640.jpg">
-          <img src="https://i.vimeocdn.com/video/452001751-320.jpg" alt="Vorschaubild Video 1" loading="lazy">
-        </button>
-        <button class="card" data-provider="youtube" data-id="dQw4w9WgXcQ" data-thumb="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg">
-          <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="Vorschaubild Video 2" loading="lazy">
-        </button>
-        <!-- weitere bis zu 16 -->
-      </div>
-      <p class="subtitle">Hinweis: Autoplay funktioniert nur stumm; Ton kann pro Video manuell aktiviert werden.</p>
-    </section>
-
-    <!-- KARTE -->
-    <section class="map" id="map">
-      <h2>Orbital Mirage</h2>
-       <p class="subtitle">Orbital Mirage is an ongoing investigation into the representation of satellite imagery in geo-visualization software
-        such as Google Mapping Services. The work combines two media: a participatory map enables one to locate, document and monitor a series of glitches, 
-        while a projection of stills shows them on reversal film. </p>
-      <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-      src="https://www.google.com/maps/d/embed?mid=1IaK4HABt7e97oZ8lE0LZEVyYjUY-8F8J&ehbc=2E312F" width="860" height="860"></iframe>
-    </section>
-  </main>
-
-  <footer id="kontakt">
-    <div class="footer-grid">
-      <div>
-        <strong>Kontakt</strong><br>
-        <a href="mailto:dein.name@example.com">dein.name@example.com</a><br>
-        Instagram: <a href="https://instagram.com/USERNAME">@USERNAME</a>
-      </div>
-      <div>
-        © <span id="year"></span> Dein Name. Alle Rechte vorbehalten.
-      </div>
-    </div>
-  </footer>
+  <!-- Google Maps -->
+  <section class="map" id="map">
+    <iframe src="https://www.google.com/maps/d/embed?mid=1IaK4HABt7e97oZ8lE0LZEVyYjUY-8F8J&ehbc=2E312F&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </section>
 
   <script>
-    // Jahr automatisch aktualisieren
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Musiksteuerung
-    (function(){
-      const btn = document.getElementById('audioToggle');
-      const audio = document.getElementById('bg-audio');
-      if(!btn || !audio) return;
-
-      const wasOn = localStorage.getItem('bg-audio-on') === '1';
-      if(wasOn){ audio.play().then(()=>{btn.textContent='⏸ Musik';}).catch(()=>{}); }
-
-      btn.addEventListener('click', async ()=>{
-        if(audio.paused){
-          try {
-            await audio.play();
-            btn.textContent = '⏸ Musik';
-            localStorage.setItem('bg-audio-on','1');
-          } catch(e){ console.warn(e); }
-        } else {
-          audio.pause();
-          btn.textContent = '▶ Musik';
-          localStorage.setItem('bg-audio-on','0');
+    // Hintergrundmusik-Steuerung
+    const audio = document.getElementById('bgAudio');
+    const btn = document.getElementById('audioToggle');
+    let playing = false;
+    btn.addEventListener('click', async () => {
+      if (!playing) {
+        try {
+          await audio.play();
+          playing = true;
+          btn.textContent = '⏸ Musik';
+          btn.setAttribute('aria-pressed','true');
+        } catch (err) {
+          console.warn('Autoplay blockiert:', err);
         }
-      });
-    })();
-
-    // Video-Handling
-    (function(){
-      const grid = document.getElementById('videoGrid');
-      if(!grid) return;
-
-      function buildIframe(provider, id, opts={autoplay:true, muted:true, loop:false, controls:true}){
-        const iframe=document.createElement('iframe');
-        iframe.setAttribute('allow','autoplay; fullscreen; picture-in-picture');
-        iframe.setAttribute('allowfullscreen','');
-        iframe.style.width='100%';
-        iframe.style.aspectRatio='16/9';
-        iframe.style.border='0';
-        iframe.style.borderRadius='16px';
-        if(provider==='youtube'){
-          const base=`https://www.youtube-nocookie.com/embed/${id}`;
-          const params=new URLSearchParams({
-            autoplay:opts.autoplay?'1':'0',
-            mute:opts.muted?'1':'0',
-            loop:opts.loop?'1':'0',
-            playlist:opts.loop?id:undefined,
-            rel:'0',modestbranding:'1',playsinline:'1',
-            controls:opts.controls?'1':'0'
-          });
-          iframe.src=`${base}?${params.toString()}`;
-        }else{
-          const base=`https://player.vimeo.com/video/${id}`;
-          const params=new URLSearchParams({
-            autoplay:opts.autoplay?'1':'0',
-            muted:opts.muted?'1':'0',
-            loop:opts.loop?'1':'0',
-            background:(!opts.controls||opts.muted)?'1':'0',
-            dnt:'1'
-          });
-          iframe.src=`${base}?${params.toString()}`;
-        }
-        return iframe;
+      } else {
+        audio.pause();
+        playing = false;
+        btn.textContent = '▶ Musik';
+        btn.setAttribute('aria-pressed','false');
       }
-
-      function unloadAllPlayers(){
-        grid.querySelectorAll('.is-playing, .is-loaded').forEach(card=>{
-          card.classList.remove('is-playing','is-loaded');
-          const old=card.querySelector('iframe');
-          if(old) old.remove();
-          const thumb=card.getAttribute('data-thumb');
-          card.innerHTML=thumb?`<img src=\"${thumb}\" alt=\"Vorschaubild\" loading=\"lazy\">`:'';
-        });
-      }
-
-      grid.addEventListener('click',(e)=>{
-        const btn=e.target.closest('button[data-provider]');
-        if(!btn)return;
-        const provider=btn.getAttribute('data-provider');
-        const id=btn.getAttribute('data-id');
-        const iframe=buildIframe(provider,id,{autoplay:true,muted:false,loop:false,controls:true});
-        btn.classList.add('is-playing');
-        btn.innerHTML='';
-        btn.appendChild(iframe);
-      });
-
-      document.getElementById('startAll')?.addEventListener('click',()=>{
-        grid.querySelectorAll('button[data-provider]').forEach(card=>{
-          const provider=card.getAttribute('data-provider');
-          const id=card.getAttribute('data-id');
-          const iframe=buildIframe(provider,id,{autoplay:true,muted:true,loop:true,controls:false});
-          card.classList.add('is-loaded');
-          card.innerHTML='';
-          card.appendChild(iframe);
-        });
-      });
-      document.getElementById('stopAll')?.addEventListener('click',unloadAllPlayers);
-    })();
+    });
   </script>
 </body>
 </html>
