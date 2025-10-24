@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Orbital Mirage</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow-x: hidden;
-      background: #000;
-      color: #fff;
-      font-family: system-ui, sans-serif;
-    }
+   html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  background: #111; /* universale Seitenfarbe, kann schwarz, weiß, grau etc. sein */
+  color: #fff;
+  font-family: system-ui, sans-serif;
+}
 
     section {
       position: relative;
@@ -24,18 +24,6 @@
       justify-content: center;
       overflow: hidden;
     }
-/* --- Fixer Hintergrund-Layer --- */
-#background-layer {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background-color: #000;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 0;
-  transition: opacity 1s ease, background-image 1s ease;
-}
 
 /* --- Intro --- */
 section.intro {
@@ -59,34 +47,16 @@ section.intro {
 
 /* --- Bildabschnitte --- */
 section.image {
-  min-height: 120vh;
+  position: relative;
+  min-height: 100vh;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  overflow: hidden;
-  background: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent; /* nutzt body-Hintergrund als Füllfarbe */
 }
-
-section.image .caption {
-  z-index: 1;
-  background: rgba(0,0,0,0.5);
-  padding: 2rem;
-  border-radius: 12px;
-  max-width: 700px;
-  text-align: center;
-  color: #fff;
-  transform: translateY(50px);
-  opacity: 0;
-  transition: all 1s ease;
-}
-section.image.active .caption {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-
-
-
 
     /* --- Video-Wand --- */
 #videowall {
@@ -135,7 +105,6 @@ section.image.active .caption {
   </style>
 </head>
 <body>
-  <div id="background-layer"></div>
 
   <!-- Hintergrundmusik -->
   <audio id="bgAudio" src="assets/stay-longer-bug-1.mp3" loop preload="none"></audio>
@@ -151,42 +120,42 @@ section.image.active .caption {
   </section>
 
   <!-- 6 Bildabschnitte -->
-<section class="image" data-bg="assets/Salty_Glitches_001.jpg">
+<section class="image" style="background-image: url('assets/Salty_Glitches_001.jpg');">
   <div class="caption">
     <h1>Salty Glitches 001</h1>
     <p>Beschreibung oder Untertitel.</p>
   </div>
 </section>
 
-<section class="image" data-bg="assets/Salty_Glitches_002.jpg">
+<section class="image" style="background-image: url('assets/Salty_Glitches_002.jpg');">
   <div class="caption">
     <h1>Salty Glitches 002</h1>
     <p>Beschreibung oder Untertitel.</p>
   </div>
 </section>
 
-<section class="image" data-bg="assets/Salty_Glitches_003.jpg">
+<section class="image" style="background-image: url('assets/Salty_Glitches_003.jpg');">
   <div class="caption">
     <h1>Salty Glitches 003</h1>
     <p>Beschreibung oder Untertitel.</p>
   </div>
 </section>
 
-<section class="image" data-bg="assets/Salty_Glitches_004.jpg">
+<section class="image" style="background-image: url('assets/Salty_Glitches_004.jpg');">
   <div class="caption">
     <h1>Salty Glitches 004</h1>
     <p><img src="assets/QR_Salty_Glitches_004.png" alt="QR-Code zur Arbeit" width="120"></p>
   </div>
 </section>
 
-<section class="image" data-bg="assets/Salty_Glitches_005.jpg">
+<section class="image" style="background-image: url('assets/Salty_Glitches_005.jpg');">
   <div class="caption">
     <h1>Salty Glitches 005</h1>
     <p><img src="assets/QR_Salty_Glitches_005.png" alt="QR-Code zur Arbeit" width="120"></p>
   </div>
 </section>
 
-<section class="image" data-bg="assets/Salty_Glitches_006.jpg">
+  <section class="image" style="background-image: url('assets/Salty_Glitches_006.jpg');">
   <div class="caption">
     <h1>Salty Glitches 006</h1>
     <p><img src="assets/QR_Salty_Glitches_006.png" alt="QR-Code zur Arbeit" width="120"></p>
@@ -273,36 +242,6 @@ section.image.active .caption {
       }
     });
   </script>
-<script>
-const bgLayer = document.getElementById('background-layer');
-const images = document.querySelectorAll('section.image');
-
-function activateSection() {
-  let foundActive = false;
-  const mid = window.innerHeight / 2;
-
-  images.forEach((sec) => {
-    const rect = sec.getBoundingClientRect();
-    const bg = sec.getAttribute('data-bg');
-    if (!bg) return; // ignoriert intro & map
-
-    if (!foundActive && rect.top < mid && rect.bottom > mid) {
-      foundActive = true;
-      sec.classList.add('active');
-      bgLayer.style.backgroundImage = `url(${bg})`;
-      bgLayer.style.opacity = 1;
-    } else {
-      sec.classList.remove('active');
-    }
-  });
-
-  if (!foundActive) bgLayer.style.opacity = 0;
-}
-
-window.addEventListener('scroll', activateSection);
-window.addEventListener('load', activateSection);
-</script>
-
 
 </body>
 </html>
