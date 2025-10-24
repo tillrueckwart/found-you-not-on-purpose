@@ -1,116 +1,312 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Orbital Mirage</title>
-<style>
-html, body {
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Orbital Mirage</title>
+  <style>
+   html, body {
   margin: 0;
   padding: 0;
-  background: #111;
+  height: 100%;
+  overflow-x: hidden;
+  background: #111; /* universale Seitenfarbe, kann schwarz, weiß, grau etc. sein */
   color: #fff;
   font-family: system-ui, sans-serif;
-  overflow-x: hidden;
 }
 
-/* Intro */
+    section {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* overflow: hidden;  ⛔ entfernt, damit background-attachment funktioniert */
+}
+
+/* --- Intro --- */
 section.intro {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
   background: #000;
+  color: #fff;
+  text-align: center;
+  padding: 2rem;
 }
 
-/* Panels mit sticky Bild (funktioniert auch auf iOS/Safari) */
-.panel {
-  height: 200vh; /* Scrollraum */
+.intro-content {
+  max-width: 800px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: introFade 1.5s ease 0.5s forwards;
+}
+@keyframes introFade { to { opacity: 1; transform: translateY(0); } }
+
+/* --- Scrolltelling mit weichen Bildübergängen --- */
+section.image {
   position: relative;
+  height: 100vh;                 /* genau eine Bildschirmhöhe */
+  background-size: contain;        /* Bild füllt den Bildschirm */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;  /* wirkt "fixiert" beim Scrollen */
+  opacity: 0;                    /* unsichtbar zu Beginn */
+  transition: opacity 1.5s ease; /* weicher Übergang */
 }
-.frame {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  overflow: clip;
-}
-.frame::before {
+
+/* Aktive Section – eingeblendet */
+section.image.visible::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: center / contain no-repeat;
-  background-image: var(--bg);
-  opacity: 0;
-  transition: opacity 1s ease;
+  background: rgba(0,0,0,0.15);
+  pointer-events: none;
 }
-.panel.visible .frame::before {
-  opacity: 1;
-}
-.caption {
-  position: relative;
-  z-index: 1;
+
+/* Text (Caption) */
+section.image .caption {
+  position: absolute;
+  bottom: 10vh;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
   background: rgba(0,0,0,0.55);
+  color: #fff;
   padding: 1.5rem 2rem;
   border-radius: 12px;
+  max-width: 700px;
   text-align: center;
-  margin-bottom: 10vh;
   opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s ease;
+  transition: all 1s ease;
 }
-.panel.visible .caption {
+
+/* Sichtbare Caption */
+section.image.visible .caption {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
 }
-</style>
+
+    /* --- Video-Wand --- */
+#videowall {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-auto-rows: 180px;
+  gap: 6px;
+  width: 90%;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+
+#videowall iframe {
+  width: 90%;
+  height: 100%;
+  border: 0;
+  pointer-events: none; /* ⛔ kein Klick */
+  user-select: none;
+  object-fit: cover;
+}
+
+
+    /* --- Google Maps --- */
+    section.map iframe {
+      width: 90%;
+      height: 100%;
+      border: 0;
+      /*filter: grayscale(100%) brightness(0.8);*/
+    }
+
+    /* --- Audio Toggle Button --- */
+    #audioToggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      border: 1px solid #999;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+  </style>
 </head>
 <body>
 
-<section class="intro">
-  <div>
-    <h1>Orbital Mirage</h1>
-    <p>(Scrollen, um die Werke zu entdecken)</p>
-  </div>
-</section>
+  <!-- Hintergrundmusik -->
+  <audio id="bgAudio" src="assets/stay-longer-bug-1.mp3" loop preload="none"></audio>
+  <button id="audioToggle" aria-pressed="false">▶ sound</button>
 
-<section class="panel" data-bg="/orbitalmirage/assets/Salty_Glitches_001.jpg">
-  <div class="frame">
-    <div class="caption">
-      <h2>Salty Glitches 001</h2>
-      <p>Test – sollte jetzt sichtbar sein</p>
+  <!-- Intro -->
+  <section class="intro">
+    <div class="intro-content">
+      <h1>Orbital Mirage</h1>
+      <p>Eine audiovisuelle Installation über digitale Fragmente, Glitches und Resonanzen.</p>
+      <p class="hint">(Scrollen, um die Werke zu entdecken)</p>
     </div>
+  </section>
+
+  <!-- 6 Bildabschnitte -->
+<section class="image" style="background-image: url('orbitalmirage/assets/Salty_Glitches_001.jpg');">
+  <div class="caption">
+    <h1>Salty Glitches 001</h1>
+    <p>Beschreibung oder Untertitel.</p>
   </div>
 </section>
 
-<section class="panel" data-bg="/orbitalmirage/assets/Salty_Glitches_002.jpg">
-  <div class="frame">
-    <div class="caption">
-      <h2>Salty Glitches 002</h2>
-      <p>Folgebild</p>
-    </div>
+<section class="image" style="background-image: url('orbitalmirage/assets/Salty_Glitches_002.jpg');">
+  <div class="caption">
+    <h1>Salty Glitches 002</h1>
+    <p>Beschreibung oder Untertitel.</p>
   </div>
 </section>
 
+<section class="image" style="background-image: url('orbitalmirage/assets/Salty_Glitches_003.jpg');">
+  <div class="caption">
+    <h1>Salty Glitches 003</h1>
+    <p>Beschreibung oder Untertitel.</p>
+  </div>
+</section>
+
+<section class="image" style="background-image: url('orbitalmirage/assets/Salty_Glitches_004.jpg');">
+  <div class="caption">
+    <h1>Salty Glitches 004</h1>
+    <p><img src="orbitalmirage/assets/QR_Salty_Glitches_004.png" alt="QR-Code zur Arbeit" width="120"></p>
+  </div>
+</section>
+
+<section class="image" style="background-image: url('orbitalmirage/assets/Salty_Glitches_005.jpg');">
+  <div class="caption">
+    <h1>Salty Glitches 005</h1>
+    <p><img src="orbitalmirage/assets/QR_Salty_Glitches_005.png" alt="QR-Code zur Arbeit" width="120"></p>
+  </div>
+</section>
+
+  <section class="image" style="background-image: url('orbitalmirage/assets/Salty_Glitches_006.jpg');">
+  <div class="caption">
+    <h1>Salty Glitches 006</h1>
+    <p><img src="orbitalmirage/assets/QR_Salty_Glitches_006.png" alt="QR-Code zur Arbeit" width="120"></p>
+  </div>
+</section>
+
+
+  <!-- Video-Wand -->
+ <section id="videos">
+  <div id="videowall">
+ 
+<iframe 
+  src="https://www.youtube.com/embed/i6nbnUMZO70?autoplay=1&mute=1&loop=1&playlist=i6nbnUMZO70&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+  width="560" height="315"
+  allow="autoplay; fullscreen"
+  allowfullscreen
+  style="border:0; pointer-events:none; user-select:none;">
+</iframe>
+<iframe 
+  src="https://www.youtube.com/embed/KsJB5lRf6nU?autoplay=1&mute=1&loop=1&playlist=KsJB5lRf6nU&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+  width="560" height="315"
+  allow="autoplay; fullscreen"
+  allowfullscreen
+  style="border:0; pointer-events:none; user-select:none;">
+</iframe>
+<iframe 
+  src="https://www.youtube.com/embed/h9hbAYfmwOw?autoplay=1&mute=1&loop=1&playlist=h9hbAYfmwOw&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+  width="560" height="315"
+  allow="autoplay; fullscreen"
+  allowfullscreen
+  style="border:0; pointer-events:none; user-select:none;">
+</iframe>
+<iframe 
+  src="https://www.youtube.com/embed/DzB8zQh6pZQ?autoplay=1&mute=1&loop=1&playlist=DzB8zQh6pZQ&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+  width="560" height="315"
+  allow="autoplay; fullscreen"
+  allowfullscreen
+  style="border:0; pointer-events:none; user-select:none;">
+</iframe>
+<iframe 
+  src="https://www.youtube.com/embed/Rk3R_je5Vko?autoplay=1&mute=1&loop=1&playlist=Rk3R_je5Vko&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+  width="560" height="315"
+  allow="autoplay; fullscreen"
+  allowfullscreen
+  style="border:0; pointer-events:none; user-select:none;">
+</iframe>
+<iframe 
+  src="https://www.youtube.com/embed/jfj80irczrU?autoplay=1&mute=1&loop=1&playlist=jfj80irczrU&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+  width="560" height="315"
+  allow="autoplay; fullscreen"
+  allowfullscreen
+  style="border:0; pointer-events:none; user-select:none;">
+</iframe>
+    <iframe 
+  src="https://www.youtube.com/embed/H8S7ZMhe1qI?autoplay=1&mute=1&loop=1&playlist=H8S7ZMhe1qI&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+  width="560" height="315"
+  allow="autoplay; fullscreen"
+  allowfullscreen
+  style="border:0; pointer-events:none; user-select:none;">
+</iframe>
+    <iframe 
+  src="https://www.youtube.com/embed/Iihngqtzdyc?autoplay=1&mute=1&loop=1&playlist=Iihngqtzdyc&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+  width="560" height="315"
+  allow="autoplay; fullscreen"
+  allowfullscreen
+  style="border:0; pointer-events:none; user-select:none;">
+</iframe>
+    <!-- 13 weitere iframes mit deinen Video-IDs -->
+  </div>
+</section>
+
+  <!-- Google Maps -->
+  <section class="map" id="map">
+ <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps/d/embed?mid=1IaK4HABt7e97oZ8lE0LZEVyYjUY-8F8J&ehbc=2E312F" width="860" height="860"></iframe>
+  </section>
+
+  <script>
+    // Hintergrundmusik-Steuerung
+    const audio = document.getElementById('bgAudio');
+    const btn = document.getElementById('audioToggle');
+    let playing = false;
+    btn.addEventListener('click', async () => {
+      if (!playing) {
+        try {
+          await audio.play();
+          playing = true;
+          btn.textContent = '⏸ sound';
+          btn.setAttribute('aria-pressed','true');
+        } catch (err) {
+          console.warn('Autoplay blockiert:', err);
+        }
+      } else {
+        audio.pause();
+        playing = false;
+        btn.textContent = '▶ sound';
+        btn.setAttribute('aria-pressed','false');
+      }
+    });
+  </script>
 <script>
-const panels = document.querySelectorAll('.panel');
+const sections = document.querySelectorAll('section.image');
 
-panels.forEach(panel => {
-  const url = panel.getAttribute('data-bg');
-  const frame = panel.querySelector('.frame');
-  frame.style.setProperty('--bg', `url("${url}")`);
-});
+function handleScroll() {
+  const mid = window.innerHeight * 0.6; // mittlerer Auslöser
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    entry.target.classList.toggle('visible', entry.isIntersecting);
+  sections.forEach(sec => {
+    const rect = sec.getBoundingClientRect();
+    const middle = rect.top + rect.height / 2;
+    const inView = middle > 0 && middle < window.innerHeight;
+
+    if (inView) {
+      sec.classList.add('visible');
+    } else {
+      sec.classList.remove('visible');
+    }
   });
-}, { threshold: 0.6 });
+}
 
-panels.forEach(panel => observer.observe(panel));
+window.addEventListener('scroll', handleScroll, { passive:true });
+window.addEventListener('load', handleScroll);
 </script>
 </body>
 </html>
