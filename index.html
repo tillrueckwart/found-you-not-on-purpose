@@ -46,17 +46,56 @@ section.intro {
 @keyframes introFade { to { opacity: 1; transform: translateY(0); } }
 
 /* --- Bildabschnitte --- */
+/* --- Scrolltelling-Bildabschnitte --- */
 section.image {
   position: relative;
-  min-height: 100vh;
+  min-height: 200vh;        /* sorgt für Scrollraum: Text läuft über Bild */
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  background-size: contain;
+  overflow: hidden;
+}
+
+/* das eigentliche Bild bleibt fixiert im Hintergrund */
+section.image::before {
+  content: "";
+  position: fixed;          /* bleibt beim Scrollen stehen */
+  inset: 0;
+  background-size: contain; /* oder cover, wenn das Bild den ganzen Screen füllen soll */
   background-repeat: no-repeat;
   background-position: center;
-  background-color: transparent; /* nutzt body-Hintergrund als Füllfarbe */
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 0;
 }
+
+/* aktives Bild einblenden */
+section.image.active::before {
+  opacity: 1;
+}
+
+/* Caption über dem fixierten Bild */
+section.image .caption {
+  position: relative;
+  z-index: 1;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 700px;
+  text-align: center;
+  margin-bottom: 15vh;
+  transform: translateY(50px);
+  opacity: 0;
+  transition: all 1s ease;
+}
+
+/* wenn Abschnitt aktiv -> Caption sichtbar */
+section.image.active .caption {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 
     /* --- Video-Wand --- */
 #videowall {
@@ -242,6 +281,66 @@ section.image {
       }
     });
   </script>
+<script>
+const sections = document.querySelectorAll('section.image');
+
+function updateSections() {
+  const mid = window.innerHeight / 2;
+  let activeFound = false;
+
+  sections.forEach((sec) => {
+    const rect = sec.getBoundingClientRect();
+    const bg = sec.style.backgroundImage;
+
+    // erstes sichtbares Section in der Mitte aktivieren
+    if (!activeFound && rect.top < mid && rect.bottom > mid) {
+      activeFound = true;
+      sec.classList.add('active');
+      sec.style.setProperty('--bg', bg);
+      sec.querySelector(':before');
+      sec.style.zIndex = 1;
+      sec.querySelector('.caption');
+      sec.style.setProperty('--visible', 1);
+      // Bild aus dem style-Attribut in das ::before setzen
+      sec.style.setProperty('--bg-url', bg);
+      sec.querySelector(':before');
+      sec.style.backgroundAttachment = 'fixed';
+      sec.style.backgroundColor = 'transparent';
+      sec.style.opacity = 1;
+      sec.style.transition = 'opacity 1s ease';
+      sec.style.position = 'relative';
+      sec.style.zIndex = 1;
+      sec.style.pointerEvents = 'auto';
+      sec.style.userSelect = 'auto';
+      sec.style.visibility = 'visible';
+      sec.style.transform = 'translateY(0)';
+      sec.style.transition = 'all 1s ease';
+      sec.style.backgroundPosition = 'center';
+      sec.style.backgroundSize = 'contain';
+      sec.style.backgroundRepeat = 'no-repeat';
+      sec.style.backgroundAttachment = 'fixed';
+      sec.style.backgroundImage = bg;
+      sec.style.opacity = 1;
+      sec.classList.add('active');
+      sec.querySelector('.caption').style.opacity = 1;
+    } else {
+      sec.classList.remove('active');
+      sec.querySelector('.caption').style.opacity = 0;
+    }
+
+    // Hintergrund in ::before setzen
+    sec.style.setProperty('--bg-image', bg);
+    sec.style.background = 'transparent';
+    sec.style.transition = 'opacity 1s ease';
+    sec.querySelector(':before');
+    sec.style.backgroundColor = 'transparent';
+    sec.style.backgroundAttachment = 'scroll';
+  });
+}
+
+window.addEventListener('scroll', updateSections, { passive: true });
+window.addEventListener('load', updateSections);
+</script>
 
 </body>
 </html>
