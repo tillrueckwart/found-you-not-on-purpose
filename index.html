@@ -36,7 +36,7 @@ html, body {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  overflow: clip;
+  overflow: hidden; /* breiter Support als clip */
 }
 
 /* Das eigentliche Bild als Hintergrund */
@@ -48,6 +48,7 @@ html, body {
   background-image: var(--bg);
   opacity: 0;
   transition: opacity 1.5s ease;
+  will-change: opacity;
   z-index: 0;
 }
 
@@ -87,7 +88,7 @@ html, body {
 </section>
 
 <!-- Panels mit Sticky-Bildern -->
-<section class="panel" data-bg="https://tillrueckwart.github.io/orbitalmirage/assets/Salty_Glitches_001.jpg">
+<section class="panel" data-bg="assets/Salty_Glitches_001.jpg">
   <div class="frame">
     <div class="caption">
       <h2>Salty Glitches 001</h2>
@@ -96,7 +97,7 @@ html, body {
   </div>
 </section>
 
-<section class="panel" data-bg="https://tillrueckwart.github.io/orbitalmirage/assets/Salty_Glitches_002.jpg">
+<section class="panel" data-bg="assets/Salty_Glitches_002.jpg">
   <div class="frame">
     <div class="caption">
       <h2>Salty Glitches 002</h2>
@@ -105,7 +106,7 @@ html, body {
   </div>
 </section>
 
-<section class="panel" data-bg="https://tillrueckwart.github.io/orbitalmirage/assets/Salty_Glitches_003.jpg">
+<section class="panel" data-bg="assets/Salty_Glitches_003.jpg">
   <div class="frame">
     <div class="caption">
       <h2>Salty Glitches 003</h2>
@@ -114,29 +115,29 @@ html, body {
   </div>
 </section>
 
-<section class="panel" data-bg="https://tillrueckwart.github.io/orbitalmirage/assets/Salty_Glitches_004.jpg">
+<section class="panel" data-bg="assets/Salty_Glitches_004.jpg">
   <div class="frame">
     <div class="caption">
       <h2>Salty Glitches 004</h2>
-      <p><img src="https://tillrueckwart.github.io/orbitalmirage/assets/QR_Salty_Glitches_004.png" width="120"></p>
+      <p><img src="assets/QR_Salty_Glitches_004.png" width="120" alt="QR-Code 004"></p>
     </div>
   </div>
 </section>
 
-<section class="panel" data-bg="https://tillrueckwart.github.io/orbitalmirage/assets/Salty_Glitches_005.jpg">
+<section class="panel" data-bg="assets/Salty_Glitches_005.jpg">
   <div class="frame">
     <div class="caption">
       <h2>Salty Glitches 005</h2>
-      <p><img src="https://tillrueckwart.github.io/orbitalmirage/assets/QR_Salty_Glitches_005.png" width="120"></p>
+      <p><img src="assets/QR_Salty_Glitches_005.png" width="120" alt="QR-Code 005"></p>
     </div>
   </div>
 </section>
 
-<section class="panel" data-bg="https://tillrueckwart.github.io/orbitalmirage/assets/Salty_Glitches_006.jpg">
+<section class="panel" data-bg="assets/Salty_Glitches_006.jpg">
   <div class="frame">
     <div class="caption">
       <h2>Salty Glitches 006</h2>
-      <p><img src="https://tillrueckwart.github.io/orbitalmirage/assets/QR_Salty_Glitches_006.png" width="120"></p>
+      <p><img src="assets/QR_Salty_Glitches_006.png" width="120" alt="QR-Code 006"></p>
     </div>
   </div>
 </section>
@@ -149,12 +150,23 @@ document.querySelectorAll('.panel').forEach(p => {
   frame.style.setProperty('--bg', `url('${url}')`);
 });
 
-// Sichtbarkeit beobachten (fade-in/out)
+// Sichtbarkeit beobachten (fade-in/out) mit Hysterese für eine kurze Pause
+const SHOW_T = 0.65; // ab dieser Sichtbarkeit einblenden
+const HIDE_T = 0.35; // unter dieser Sichtbarkeit ausblenden
+
 const io = new IntersectionObserver(entries => {
   entries.forEach(entry => {
-    entry.target.classList.toggle('visible', entry.isIntersecting);
+    const el = entry.target;
+    const ratio = entry.intersectionRatio;
+    const isVisible = el.classList.contains('visible');
+
+    if (!isVisible && ratio > SHOW_T) {
+      el.classList.add('visible');
+    } else if (isVisible && ratio < HIDE_T) {
+      el.classList.remove('visible');
+    }
   });
-}, { threshold: 0.6 });
+}, { threshold: Array.from({ length: 101 }, (_, i) => i / 100) });
 
 document.querySelectorAll('.panel').forEach(p => io.observe(p));
 </script>
