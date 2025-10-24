@@ -24,9 +24,21 @@
       justify-content: center;
       overflow: hidden;
     }
-/* --- Intro-Section --- */
+/* --- Fixer Hintergrund-Layer --- */
+#background-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: #000;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease, background-image 1s ease;
+}
+
+/* --- Intro --- */
 section.intro {
-  position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -38,81 +50,40 @@ section.intro {
 }
 
 .intro-content {
+  max-width: 800px;
   opacity: 0;
   transform: translateY(20px);
-  animation: introFade 1.8s ease 0.5s forwards;
+  animation: introFade 1.5s ease 0.5s forwards;
 }
+@keyframes introFade { to { opacity: 1; transform: translateY(0); } }
 
-@keyframes introFade {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-section.intro h1 {
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  margin-bottom: 1rem;
-  letter-spacing: 0.03em;
-}
-
-section.intro p {
-  font-size: clamp(1rem, 2vw, 1.5rem);
-  opacity: 0.8;
-}
-
-section.intro .hint {
-  margin-top: 2rem;
-  font-size: 0.9rem;
-  opacity: 0.5;
-}
-
-    /* --- Bild-Sections --- */
- /* --- Bild-Sections mit Parallax-Effekt --- */
-/* --- Bild-Sections --- */
+/* --- Bildabschnitte --- */
 section.image {
-  position: relative;
-  min-height: 120vh; /* Scrollhöhe */
+  min-height: 120vh;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  background: transparent;
   overflow: hidden;
+  background: transparent;
 }
 
-/* globale Bildfläche */
-#background-layer {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: -1;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-color: #000;
-  transition: opacity 1.5s ease, background-image 1.5s ease;
-  opacity: 0;
-}
-
-/* Text-Overlay */
 section.image .caption {
-  position: relative;
   z-index: 1;
   background: rgba(0,0,0,0.5);
   padding: 2rem;
   border-radius: 12px;
   max-width: 700px;
   text-align: center;
+  color: #fff;
   transform: translateY(50px);
   opacity: 0;
-  transition: all 1.2s ease;
+  transition: all 1s ease;
 }
-
 section.image.active .caption {
   transform: translateY(0);
   opacity: 1;
 }
 
-section.image h1 {
-  margin: 0 0 1rem;
-  font-size: clamp(2rem, 4vw, 3rem);
-}
 
 
 
@@ -170,7 +141,8 @@ section.image h1 {
   <audio id="bgAudio" src="assets/stay-longer-bug-1.mp3" loop preload="none"></audio>
   <button id="audioToggle" aria-pressed="false">▶ sound</button>
 
-    <section class="intro">
+  <!-- Intro -->
+  <section class="intro">
     <div class="intro-content">
       <h1>Orbital Mirage</h1>
       <p>Eine audiovisuelle Installation über digitale Fragmente, Glitches und Resonanzen.</p>
@@ -280,21 +252,21 @@ section.image h1 {
       }
     });
   </script>
- <script>
-const sections = document.querySelectorAll('section.intro, section.image, sectin.map');
-
+<script>
 const bgLayer = document.getElementById('background-layer');
+const images = document.querySelectorAll('section.into, section.image, section.map');
 
 function activateSection() {
   let foundActive = false;
   const mid = window.innerHeight / 2;
 
-  sections.forEach((sec) => {
+  images.forEach((sec) => {
     const rect = sec.getBoundingClientRect();
     const top = rect.top;
+    const bg = sec.getAttribute('data-bg');
+
     if (!foundActive && top < mid && top + rect.height > mid) {
       foundActive = true;
-      const bg = sec.getAttribute('data-bg');
       sec.classList.add('active');
       bgLayer.style.backgroundImage = `url(${bg})`;
       bgLayer.style.opacity = 1;
@@ -303,14 +275,14 @@ function activateSection() {
     }
   });
 
-  if (!foundActive) {
-    bgLayer.style.opacity = 0; // schwarzer Hintergrund zwischen Abschnitten
-  }
+  // Nichts aktiv? → Schwarz
+  if (!foundActive) bgLayer.style.opacity = 0;
 }
 
 window.addEventListener('scroll', activateSection);
 window.addEventListener('load', activateSection);
 </script>
+
 
 </body>
 </html>
