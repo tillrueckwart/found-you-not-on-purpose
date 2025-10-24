@@ -45,45 +45,44 @@ section.intro {
 }
 @keyframes introFade { to { opacity: 1; transform: translateY(0); } }
 
-/* --- Bildabschnitte --- */
-/* --- Scrolltelling-Bildabschnitte --- */
-/* --- Scrolltelling mit fixiertem Bildhintergrund --- */
+/* --- Scrolltelling mit weichen Bildübergängen --- */
 section.image {
   position: relative;
-  min-height: 200vh; /* sorgt für genug Scrollstrecke */
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  background-size: contain; /* oder cover, wenn du das Bild vollflächig willst */
-  background-repeat: no-repeat;
+  height: 100vh;                 /* genau eine Bildschirmhöhe */
+  background-size: cover;        /* Bild füllt den Bildschirm */
   background-position: center;
-  background-attachment: fixed; /* sorgt für "feststehendes" Bild */
-  transition: background-image 1s ease, opacity 1s ease;
+  background-repeat: no-repeat;
+  background-attachment: fixed;  /* wirkt "fixiert" beim Scrollen */
+  opacity: 0;                    /* unsichtbar zu Beginn */
+  transition: opacity 1.5s ease; /* weicher Übergang */
 }
 
-/* Caption (Text) */
+/* Aktive Section – eingeblendet */
+section.image.visible {
+  opacity: 1;
+}
+
+/* Text (Caption) */
 section.image .caption {
-  position: relative;
-  z-index: 1;
+  position: absolute;
+  bottom: 10vh;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
   background: rgba(0,0,0,0.55);
-  padding: 2rem;
+  color: #fff;
+  padding: 1.5rem 2rem;
   border-radius: 12px;
   max-width: 700px;
   text-align: center;
-  color: #fff;
-  margin-bottom: 15vh;
   opacity: 0;
-  transform: translateY(50px);
   transition: all 1s ease;
 }
 
-/* sanftes Einblenden der Caption beim Scrollen */
+/* Sichtbare Caption */
 section.image.visible .caption {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
 }
-
-
 
     /* --- Video-Wand --- */
 #videowall {
@@ -273,11 +272,14 @@ section.image.visible .caption {
 const sections = document.querySelectorAll('section.image');
 
 function handleScroll() {
-  const triggerPoint = window.innerHeight * 0.7;
+  const mid = window.innerHeight * 0.6; // mittlerer Auslöser
 
   sections.forEach(sec => {
     const rect = sec.getBoundingClientRect();
-    if (rect.top < triggerPoint && rect.bottom > triggerPoint / 2) {
+    const middle = rect.top + rect.height / 2;
+    const inView = middle > 0 && middle < window.innerHeight;
+
+    if (inView) {
       sec.classList.add('visible');
     } else {
       sec.classList.remove('visible');
@@ -285,10 +287,8 @@ function handleScroll() {
   });
 }
 
-window.addEventListener('scroll', handleScroll, { passive: true });
+window.addEventListener('scroll', handleScroll, { passive:true });
 window.addEventListener('load', handleScroll);
 </script>
-
-
 </body>
 </html>
