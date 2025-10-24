@@ -254,7 +254,7 @@ section.image.active .caption {
   </script>
 <script>
 const bgLayer = document.getElementById('background-layer');
-const images = document.querySelectorAll('section.into, section.image, section.map');
+const images = document.querySelectorAll('section.image');
 
 function activateSection() {
   let foundActive = false;
@@ -262,10 +262,10 @@ function activateSection() {
 
   images.forEach((sec) => {
     const rect = sec.getBoundingClientRect();
-    const top = rect.top;
     const bg = sec.getAttribute('data-bg');
+    if (!bg) return; // ignoriert intro & map
 
-    if (!foundActive && top < mid && top + rect.height > mid) {
+    if (!foundActive && rect.top < mid && rect.bottom > mid) {
       foundActive = true;
       sec.classList.add('active');
       bgLayer.style.backgroundImage = `url(${bg})`;
@@ -275,7 +275,6 @@ function activateSection() {
     }
   });
 
-  // Nichts aktiv? → Schwarz
   if (!foundActive) bgLayer.style.opacity = 0;
 }
 
