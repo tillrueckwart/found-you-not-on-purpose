@@ -26,27 +26,43 @@
     }
 
     /* --- Bild-Sections --- */
-    section.image img {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-      filter: brightness(0.8);
-      transition: transform 20s ease;
-    }
+   section.image {
+  position: relative;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    section.image:hover img {
-      transform: scale(1.05);
-    }
+section.image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35); /* dunkler Filter für Lesbarkeit */
+  z-index: 0;
+}
 
-    section.image .caption {
-      text-align: center;
-      max-width: 800px;
-      padding: 2rem;
-      background: rgba(0, 0, 0, 0.45);
-      border-radius: 1rem;
-    }
+section.image .caption {
+  position: relative;
+  z-index: 1;
+  background: rgba(0,0,0,0.4);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 700px;
+  text-align: center;
+}
+
+section.image h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+section.image p {
+  margin: 0;
+}
 
     /* --- Video-Wand --- */
 #videowall {
@@ -101,12 +117,48 @@
   <button id="audioToggle" aria-pressed="false">▶ Musik</button>
 
   <!-- 6 Bildabschnitte -->
-  <section class="image"><img src="assets/Salty_Glitches_001.jpg" alt=""><div class="caption"><h1>Salty Glitches 001</h1><p>Beschreibung oder Untertitel.</p></div></section>
-  <section class="image"><img src="assets/Salty_Glitches_002.jpg" alt=""><div class="caption"><h1>Salty Glitches 002</h1><p>Beschreibung oder Untertitel.</p></div></section>
-  <section class="image"><img src="assets/Salty_Glitches_003.jpg" alt=""><div class="caption"><h1>Salty Glitches 003</h1><p>Beschreibung oder Untertitel.</p></div></section>
-  <section class="image"><img src="assets/Salty_Glitches_004.jpg" alt=""><div class="caption"><h1>Salty Glitches 004</h1><p><img src="assets/QR_Salty_Glitches_004.png" alt="QR-Code zur Arbeit" width="150" height="150"></p></div></section>
-  <section class="image"><img src="assets/Salty_Glitches_005.jpg" alt=""><div class="caption"><h1>Salty Glitches 005</h1><p><img src="assets/QR_Salty_Glitches_005.png" alt="QR-Code zur Arbeit" width="150" height="150"></p></div></section>
-  <section class="image"><img src="assets/Salty_Glitches_006.jpg" alt=""><div class="caption"><h1>Salty Glitches 006</h1><p><img src="assets/QR_Salty_Glitches_006.png" alt="QR-Code zur Arbeit" width="150" height="150"></p></div></section>
+ <section class="image" style="background-image:url('assets/Salty_Glitches_001.jpg')">
+  <div class="caption">
+    <h1>Salty Glitches 001</h1>
+    <p>Beschreibung oder Untertitel.</p>
+  </div>
+</section>
+
+<section class="image" style="background-image:url('assets/Salty_Glitches_002.jpg')">
+  <div class="caption">
+    <h1>Salty Glitches 002</h1>
+    <p>Beschreibung oder Untertitel.</p>
+  </div>
+</section>
+
+<section class="image" style="background-image:url('assets/Salty_Glitches_003.jpg')">
+  <div class="caption">
+    <h1>Salty Glitches 003</h1>
+    <p>Beschreibung oder Untertitel.</p>
+  </div>
+</section>
+
+<section class="image" style="background-image:url('assets/Salty_Glitches_004.jpg')">
+  <div class="caption">
+    <h1>Salty Glitches 004</h1>
+    <p><img src="assets/QR_Salty_Glitches_004.png" alt="QR-Code zur Arbeit" width="150"></p>
+  </div>
+</section>
+
+<section class="image" style="background-image:url('assets/Salty_Glitches_005.jpg')">
+  <div class="caption">
+    <h1>Salty Glitches 005</h1>
+    <p><img src="assets/QR_Salty_Glitches_005.png" alt="QR-Code zur Arbeit" width="150"></p>
+  </div>
+</section>
+
+<section class="image" style="background-image:url('assets/Salty_Glitches_006.jpg')">
+  <div class="caption">
+    <h1>Salty Glitches 006</h1>
+    <p><img src="assets/QR_Salty_Glitches_006.png" alt="QR-Code zur Arbeit" width="150"></p>
+  </div>
+</section>
+
 
   <!-- Video-Wand -->
  <section id="videos">
