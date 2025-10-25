@@ -47,26 +47,36 @@ section.intro {
 /* --- Asymmetrische Video-Wand --- */
 #videowall {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);  /* 6 Spalten */
-  grid-template-rows: repeat(4, 1fr);     /* 4 Reihen */
-  gap: 6px;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 8px;
   width: 100vw;
   height: 100vh;
   background: #000;
   overflow: hidden;
 }
 
-#videowall iframe {
+/* Wrapper erzwingt echtes 4:3-Verhältnis */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;   /* 👈 4 : 3 bleibt erhalten  */
+  overflow: hidden;
+}
+
+/* YouTube-iFrame füllt den Wrapper */
+.video-wrapper iframe {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   border: none;
   pointer-events: none;
-  object-fit: cover;
-  user-select: none;
+  object-fit: contain;   /* ganze Fläche sichtbar, keine Verzerrung  */
 }
 
-/* --- Individuelle Positionen & Größen --- */
-.v1 { grid-area: 1 / 1 / 3 / 3; } /* start-row / start-col / end-row / end-col */
+/* --- Individuelle Positionen im Grid --- */
+.v1 { grid-area: 1 / 1 / 3 / 3; }
 .v2 { grid-area: 1 / 3 / 2 / 5; }
 .v3 { grid-area: 1 / 5 / 3 / 7; }
 .v4 { grid-area: 3 / 1 / 5 / 2; }
@@ -74,6 +84,7 @@ section.intro {
 .v6 { grid-area: 2 / 4 / 5 / 5; }
 .v7 { grid-area: 3 / 5 / 5 / 7; }
 .v8 { grid-area: 2 / 6 / 4 / 7; }
+
 
 
 section.map iframe {
@@ -116,18 +127,69 @@ section.map iframe {
 
 
   <!-- Video-Wand -->
- <section id="videos">
-<div id="videowall">
-  <iframe class="v1" src="https://www.youtube.com/embed/i6nbnUMZO70?autoplay=1&mute=1&loop=1&playlist=i6nbnUMZO70&controls=0&modestbranding=1&disablekb=1&playsinline=1"></iframe>
-  <iframe class="v2" src="https://www.youtube.com/embed/KsJB5lRf6nU?autoplay=1&mute=1&loop=1&playlist=KsJB5lRf6nU&controls=0&modestbranding=1&disablekb=1&playsinline=1"></iframe>
-  <iframe class="v3" src="https://www.youtube.com/embed/h9hbAYfmwOw?autoplay=1&mute=1&loop=1&playlist=h9hbAYfmwOw&controls=0&modestbranding=1&disablekb=1&playsinline=1"></iframe>
-  <iframe class="v4" src="https://www.youtube.com/embed/DzB8zQh6pZQ?autoplay=1&mute=1&loop=1&playlist=DzB8zQh6pZQ&controls=0&modestbranding=1&disablekb=1&playsinline=1"></iframe>
-  <iframe class="v5" src="https://www.youtube.com/embed/Rk3R_je5Vko?autoplay=1&mute=1&loop=1&playlist=Rk3R_je5Vko&controls=0&modestbranding=1&disablekb=1&playsinline=1"></iframe>
-  <iframe class="v6" src="https://www.youtube.com/embed/jfj80irczrU?autoplay=1&mute=1&loop=1&playlist=jfj80irczrU&controls=0&modestbranding=1&disablekb=1&playsinline=1"></iframe>
-  <iframe class="v7" src="https://www.youtube.com/embed/H8S7ZMhe1qI?autoplay=1&mute=1&loop=1&playlist=H8S7ZMhe1qI&controls=0&modestbranding=1&disablekb=1&playsinline=1"></iframe>
-  <iframe class="v8" src="https://www.youtube.com/embed/Iihngqtzdyc?autoplay=1&mute=1&loop=1&playlist=Iihngqtzdyc&controls=0&modestbranding=1&disablekb=1&playsinline=1"></iframe>
-</div>
+<!-- 🎞️ Video-Wand -->
+<section id="videos">
+  <div id="videowall">
+    
+    <div class="video-wrapper v1">
+      <iframe 
+        src="https://www.youtube.com/embed/i6nbnUMZO70?autoplay=1&mute=1&loop=1&playlist=i6nbnUMZO70&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+        allow="autoplay; fullscreen" allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="video-wrapper v2">
+      <iframe 
+        src="https://www.youtube.com/embed/KsJB5lRf6nU?autoplay=1&mute=1&loop=1&playlist=KsJB5lRf6nU&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+        allow="autoplay; fullscreen" allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="video-wrapper v3">
+      <iframe 
+        src="https://www.youtube.com/embed/h9hbAYfmwOw?autoplay=1&mute=1&loop=1&playlist=h9hbAYfmwOw&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+        allow="autoplay; fullscreen" allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="video-wrapper v4">
+      <iframe 
+        src="https://www.youtube.com/embed/DzB8zQh6pZQ?autoplay=1&mute=1&loop=1&playlist=DzB8zQh6pZQ&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+        allow="autoplay; fullscreen" allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="video-wrapper v5">
+      <iframe 
+        src="https://www.youtube.com/embed/Rk3R_je5Vko?autoplay=1&mute=1&loop=1&playlist=Rk3R_je5Vko&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+        allow="autoplay; fullscreen" allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="video-wrapper v6">
+      <iframe 
+        src="https://www.youtube.com/embed/jfj80irczrU?autoplay=1&mute=1&loop=1&playlist=jfj80irczrU&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+        allow="autoplay; fullscreen" allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="video-wrapper v7">
+      <iframe 
+        src="https://www.youtube.com/embed/H8S7ZMhe1qI?autoplay=1&mute=1&loop=1&playlist=H8S7ZMhe1qI&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+        allow="autoplay; fullscreen" allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="video-wrapper v8">
+      <iframe 
+        src="https://www.youtube.com/embed/Iihngqtzdyc?autoplay=1&mute=1&loop=1&playlist=Iihngqtzdyc&controls=0&modestbranding=1&disablekb=1&playsinline=1" 
+        allow="autoplay; fullscreen" allowfullscreen>
+      </iframe>
+    </div>
+
+  </div>
 </section>
+
 
   <!-- Google Maps -->
   <section class="map" id="map">
