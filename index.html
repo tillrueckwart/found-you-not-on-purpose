@@ -61,7 +61,7 @@ section.intro {
   border-radius: 8px;
   transform: scale(0.65); /* ⬅️ auf 85 % verkleinert */
   transform-origin: center;
-  transition: transform 1s linear;
+  transition: transform 1s linear, z-index 0.5s ease;
 }
 
 .video-wrapper iframe {
@@ -236,7 +236,7 @@ const wrappers = document.querySelectorAll('.video-wrapper');
 const speeds = [];
 const positions = [];
 
-// Startpositionen & sehr langsame Bewegung
+// Startpositionen & Geschwindigkeiten
 wrappers.forEach((w, i) => {
   const rect = w.getBoundingClientRect();
   positions[i] = {
@@ -248,20 +248,31 @@ wrappers.forEach((w, i) => {
     y: (Math.random() * 0.02 + 0.006) * (Math.random() < 0.5 ? 1 : -1)
   };
 
-  // Anfangs-Z-Index zufällig
-  w.style.zIndex = Math.floor(Math.random() * 10) + 1;
+  // eindeutiger Anfangs-zIndex
+  w.style.zIndex = i + 1;
 });
+
+// Hilfsfunktion: eindeutige Z-Index-Reihenfolge rotieren
+function shuffleZIndexes(bouncedIndex) {
+  const zValues = Array.from(wrappers).map(w => parseInt(w.style.zIndex));
+  // „bouncedIndex“ soll nach vorne (höchster Z-Wert)
+  const maxZ = Math.max(...zValues);
+  wrappers[bouncedIndex].style.zIndex = maxZ + 1;
+
+  // Danach alles sortiert halten (kleinste zuerst)
+  const sorted = Array.from(wrappers).sort(
+    (a, b) => parseInt(a.style.zIndex) - parseInt(b.style.zIndex)
+  );
+  sorted.forEach((w, i) => (w.style.zIndex = i + 1));
+}
 
 function animate() {
   wrappers.forEach((w, i) => {
     const rect = w.getBoundingClientRect();
-
     positions[i].x += speeds[i].x;
     positions[i].y += speeds[i].y;
-
     let bounced = false;
 
-    // Randkollisionen erkennen
     if (positions[i].x <= 0 || positions[i].x + rect.width >= window.innerWidth) {
       speeds[i].x *= -1;
       bounced = true;
@@ -271,12 +282,10 @@ function animate() {
       bounced = true;
     }
 
-    // ✨ Wenn an Wand gestoßen → neuen z-Index vergeben
-    if (bounced) {
-      w.style.zIndex = Math.floor(Math.random() * 10) + 1;
-    }
+    // ✨ Bei Kollision eindeutigen Z-Index neu zuweisen
+    if (bounced) shuffleZIndexes(i);
 
-    // Bewegung anwenden
+    // Anwenden der Position & Skalierung
     w.style.transform = `translate(${positions[i].x}px, ${positions[i].y}px) scale(0.85)`;
   });
 
@@ -285,6 +294,7 @@ function animate() {
 
 animate();
 </script>
+
 
 
 
