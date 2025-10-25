@@ -221,12 +221,12 @@ section.map iframe {
     });
   });
   </script>
-  <script>
+<script>
 const wrappers = document.querySelectorAll('.video-wrapper');
 const speeds = [];
 const positions = [];
 
-// Starte mit zufälligen Richtungen & Positionen
+// Zufällige Startpositionen & stark reduzierte Bewegungsgeschwindigkeit
 wrappers.forEach((w, i) => {
   const rect = w.getBoundingClientRect();
   positions[i] = {
@@ -234,8 +234,9 @@ wrappers.forEach((w, i) => {
     y: Math.random() * (window.innerHeight - rect.height)
   };
   speeds[i] = {
-    x: (Math.random() * 1 + 0.3) * (Math.random() < 0.5 ? 1 : -1),
-    y: (Math.random() * 1 + 0.3) * (Math.random() < 0.5 ? 1 : -1)
+    // ⬇️ 20 % des vorherigen Tempos
+    x: (Math.random() * 0.2 + 0.06) * (Math.random() < 0.5 ? 1 : -1),
+    y: (Math.random() * 0.2 + 0.06) * (Math.random() < 0.5 ? 1 : -1)
   };
 });
 
@@ -246,7 +247,7 @@ function animate() {
     positions[i].x += speeds[i].x;
     positions[i].y += speeds[i].y;
 
-    // Randkollision
+    // Kollision mit Wänden
     if (positions[i].x <= 0 || positions[i].x + rect.width >= window.innerWidth) {
       speeds[i].x *= -1;
     }
@@ -254,7 +255,7 @@ function animate() {
       speeds[i].y *= -1;
     }
 
-    // Anwenden
+    // Anwenden der Position
     w.style.transform = `translate(${positions[i].x}px, ${positions[i].y}px)`;
   });
 
@@ -263,6 +264,7 @@ function animate() {
 
 animate();
 </script>
+
 
 </body>
 </html>
