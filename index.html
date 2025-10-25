@@ -253,35 +253,29 @@ section.map iframe {
 const wrappers = document.querySelectorAll('.video-wrapper');
 const speeds = [];
 const positions = [];
+let winW = window.innerWidth;
+let winH = window.innerHeight;
 
-// Startpositionen & Geschwindigkeiten
+// Initialisierung
 wrappers.forEach((w, i) => {
   const rect = w.getBoundingClientRect();
   positions[i] = {
-    x: Math.random() * (window.innerWidth - rect.width),
-    y: Math.random() * (window.innerHeight - rect.height)
+    x: Math.random() * (winW - rect.width),
+    y: Math.random() * (winH - rect.height)
   };
   speeds[i] = {
     x: (Math.random() * 0.02 + 0.006) * (Math.random() < 0.5 ? 1 : -1),
     y: (Math.random() * 0.02 + 0.006) * (Math.random() < 0.5 ? 1 : -1)
   };
-
-  // eindeutiger Anfangs-zIndex
   w.style.zIndex = i + 1;
 });
 
-// Hilfsfunktion: eindeutige Z-Index-Reihenfolge rotieren
 function shuffleZIndexes(bouncedIndex) {
-  const zValues = Array.from(wrappers).map(w => parseInt(w.style.zIndex));
-  // „bouncedIndex“ soll nach vorne (höchster Z-Wert)
-  const maxZ = Math.max(...zValues);
-  wrappers[bouncedIndex].style.zIndex = maxZ + 1;
-
-  // Danach alles sortiert halten (kleinste zuerst)
   const sorted = Array.from(wrappers).sort(
     (a, b) => parseInt(a.style.zIndex) - parseInt(b.style.zIndex)
   );
   sorted.forEach((w, i) => (w.style.zIndex = i + 1));
+  wrappers[bouncedIndex].style.zIndex = wrappers.length;
 }
 
 function animate() {
@@ -291,27 +285,46 @@ function animate() {
     positions[i].y += speeds[i].y;
     let bounced = false;
 
-    if (positions[i].x <= 0 || positions[i].x + rect.width >= window.innerWidth) {
+    // Abprallen an neuen Bildschirmrändern
+    if (positions[i].x <= 0 || positions[i].x + rect.width >= winW) {
       speeds[i].x *= -1;
       bounced = true;
     }
-    if (positions[i].y <= 0 || positions[i].y + rect.height >= window.innerHeight) {
+    if (positions[i].y <= 0 || positions[i].y + rect.height >= winH) {
       speeds[i].y *= -1;
       bounced = true;
     }
 
-    // ✨ Bei Kollision eindeutigen Z-Index neu zuweisen
     if (bounced) shuffleZIndexes(i);
 
-    // Anwenden der Position & Skalierung
     w.style.transform = `translate(${positions[i].x}px, ${positions[i].y}px) scale(0.85)`;
   });
 
   requestAnimationFrame(animate);
 }
 
+// 💡 Responsive Anpassung bei Fenstergröße ändern
+window.addEventListener('resize', () => {
+  const newW = window.innerWidth;
+  const newH = window.innerHeight;
+
+  // Verhältnisänderung berechnen
+  const scaleX = newW / winW;
+  const scaleY = newH / winH;
+
+  // Alle Positionen proportional anpassen
+  positions.forEach(p => {
+    p.x *= scaleX;
+    p.y *= scaleY;
+  });
+
+  winW = newW;
+  winH = newH;
+});
+
 animate();
 </script>
+
 
 
 
