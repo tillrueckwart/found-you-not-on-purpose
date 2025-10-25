@@ -94,8 +94,63 @@ section.intro {
 <body>
 
   <!-- Hintergrundmusik -->
-  <audio id="bgAudio" src="assets/stay-longer-bug-1.mp3" loop preload="none"></audio>
-  <button id="audioToggle" aria-pressed="false">▶ sound</button>
+<script>
+const audio = document.getElementById('bgAudio');
+const btn = document.getElementById('audioToggle');
+let playing = false;
+
+// 1️⃣ Audio vorbereiten
+audio.muted = true;  // stumm starten (erlaubt Autoplay)
+audio.volume = 0.8;  // gewünschte Lautstärke später
+
+// 2️⃣ Versuch: Autoplay beim Laden (stumm)
+window.addEventListener('load', async () => {
+  try {
+    await audio.play();
+    playing = true;
+    btn.textContent = '⏸ sound';
+    btn.setAttribute('aria-pressed', 'true');
+    console.log('Autoplay (muted) gestartet');
+  } catch (err) {
+    console.warn('Autoplay blockiert:', err);
+  }
+});
+
+// 3️⃣ Erste Nutzeraktion schaltet Sound hörbar
+function unmuteOnUserAction() {
+  if (audio.muted) {
+    audio.muted = false;
+    console.log('🔊 Sound aktiviert nach Interaktion');
+  }
+  // Entfernt alle Listener nach der ersten Aktion
+  window.removeEventListener('scroll', unmuteOnUserAction);
+  window.removeEventListener('pointerdown', unmuteOnUserAction);
+  window.removeEventListener('keydown', unmuteOnUserAction);
+}
+window.addEventListener('scroll', unmuteOnUserAction, { once: true });
+window.addEventListener('pointerdown', unmuteOnUserAction, { once: true });
+window.addEventListener('keydown', unmuteOnUserAction, { once: true });
+
+// 4️⃣ Optionaler Button zum Pausieren/Starten
+btn.addEventListener('click', async () => {
+  if (!playing) {
+    try {
+      await audio.play();
+      playing = true;
+      btn.textContent = '⏸ sound';
+      btn.setAttribute('aria-pressed', 'true');
+    } catch (err) {
+      console.warn('Play-Fehler:', err);
+    }
+  } else {
+    audio.pause();
+    playing = false;
+    btn.textContent = '▶ sound';
+    btn.setAttribute('aria-pressed', 'false');
+  }
+});
+</script>
+
 
   <!-- Intro -->
   <section class="intro">
