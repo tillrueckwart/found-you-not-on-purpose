@@ -52,8 +52,29 @@ section.intro {
   overflow: hidden;
 }
 
+    /* 👇 Hintergrundtext */
+#videowall .background-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18vw; /* passt sich Bildschirmgröße an */
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.05); /* sehr subtil, halbtransparent */
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-shadow: 0 0 40px rgba(255,255,255,0.15);
+  z-index: 0; /* hinter den Videos */
+  user-select: none;
+  pointer-events: none;
+}
+
 .video-wrapper {
   position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
   width: 25vw;      /* 4:3 Verhältnis durch Höhe */
   aspect-ratio: 4 / 3;
   overflow: hidden;
@@ -128,12 +149,18 @@ section.map iframe {
 <section class="spacer">
   <div class="spacer-content">
     <h2>stay a little longer, bug</h2>
-    <p>This project is a...</p>
   </div>
 </section>
  <!-- 🎞️ Video-Wand mit beweglichen Iframes -->
 <section id="videos">
   <div id="videowall">
+    <div class="background-text">You are listening to an atmospheric soundscape by NOOW, a Berlin-based producer duo that revels in the healing energies of music.
+     <i>The Frequency of Health and Beauty</i> is a 285 Hz sound piece. Subliminally, it resonates with the aesthetics of mirage-like satellite view glitches that
+      unfold in the continuous flow of zooming in and out… in and out… in and out…
+      While meditation emerges as a popular coping strategy for inner healing and self-care in our digitized everyday lives, technologies heal too. Bugs are being fixed.
+      Hopeful uncertainties vanish. The 16-channel video installation <i>stay a little longer, bug</i> follows the vivid existence of random digital phenomena.
+      It searches for the qualities and visual ecstasies of unintended code issues. By slowly getting closer, it lets the bugs speak, show their inner being, and breathe.
+    </div>
     <div class="video-wrapper">
       <iframe src="https://www.youtube.com/embed/i6nbnUMZO70?autoplay=1&mute=1&loop=1&playlist=i6nbnUMZO70&controls=0&modestbranding=1&disablekb=1&playsinline=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
