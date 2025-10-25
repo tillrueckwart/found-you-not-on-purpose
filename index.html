@@ -46,8 +46,12 @@
   pointer-events: none;
   backdrop-filter: blur(2px);
   text-shadow: 0 0 8px rgba(107, 10, 184, 0.15);
+  animation: glow 4s ease-in-out infinite alternate;
 }
-
+@keyframes glow {
+  0% { opacity: 0.5; text-shadow: 0 0 5px rgba(107, 10, 184,0.2); }
+  100% { opacity: 1; text-shadow: 0 0 20px rgba(107, 10, 184,0.4); }
+}
 /* --- Intro --- */
 section.intro {
   min-height: 100vh;
