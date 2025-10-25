@@ -24,7 +24,6 @@
   justify-content: center;
   /* overflow: hidden;  ⛔ entfernt, damit background-attachment funktioniert */
 }
-
 /* --- Intro --- */
 section.intro {
   min-height: 100vh;
@@ -76,14 +75,14 @@ section.intro {
     }
 
     /* --- Audio Toggle Button --- */
-    #audioToggle {
+  #audioToggle {
       position: fixed;
       bottom: 20px;
       right: 20px;
       z-index: 100;
       border-radius: 999px;
       padding: 10px 16px;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0,0,0,0.6);
       color: #fff;
       border: 1px solid #999;
       cursor: pointer;
@@ -93,63 +92,8 @@ section.intro {
 </head>
 <body>
 
-  <!-- Hintergrundmusik -->
-<script>
-const audio = document.getElementById('bgAudio');
-const btn = document.getElementById('audioToggle');
-let playing = false;
-
-// 1️⃣ Audio vorbereiten
-audio.muted = true;  // stumm starten (erlaubt Autoplay)
-audio.volume = 0.8;  // gewünschte Lautstärke später
-
-// 2️⃣ Versuch: Autoplay beim Laden (stumm)
-window.addEventListener('load', async () => {
-  try {
-    await audio.play();
-    playing = true;
-    btn.textContent = '⏸ sound';
-    btn.setAttribute('aria-pressed', 'true');
-    console.log('Autoplay (muted) gestartet');
-  } catch (err) {
-    console.warn('Autoplay blockiert:', err);
-  }
-});
-
-// 3️⃣ Erste Nutzeraktion schaltet Sound hörbar
-function unmuteOnUserAction() {
-  if (audio.muted) {
-    audio.muted = false;
-    console.log('🔊 Sound aktiviert nach Interaktion');
-  }
-  // Entfernt alle Listener nach der ersten Aktion
-  window.removeEventListener('scroll', unmuteOnUserAction);
-  window.removeEventListener('pointerdown', unmuteOnUserAction);
-  window.removeEventListener('keydown', unmuteOnUserAction);
-}
-window.addEventListener('scroll', unmuteOnUserAction, { once: true });
-window.addEventListener('pointerdown', unmuteOnUserAction, { once: true });
-window.addEventListener('keydown', unmuteOnUserAction, { once: true });
-
-// 4️⃣ Optionaler Button zum Pausieren/Starten
-btn.addEventListener('click', async () => {
-  if (!playing) {
-    try {
-      await audio.play();
-      playing = true;
-      btn.textContent = '⏸ sound';
-      btn.setAttribute('aria-pressed', 'true');
-    } catch (err) {
-      console.warn('Play-Fehler:', err);
-    }
-  } else {
-    audio.pause();
-    playing = false;
-    btn.textContent = '▶ sound';
-    btn.setAttribute('aria-pressed', 'false');
-  }
-});
-</script>
+<audio id="bgAudio" src="assets/stay-longer-bug-1.mp3" loop preload="auto"></audio>
+  <button id="audioToggle" aria-pressed="false">▶ sound</button>
 
 
   <!-- Intro -->
@@ -232,50 +176,60 @@ btn.addEventListener('click', async () => {
       src="https://www.google.com/maps/d/embed?mid=1IaK4HABt7e97oZ8lE0LZEVyYjUY-8F8J&ehbc=2E312F" width="860" height="860"></iframe>
   </section>
 
-  <script>
-    // Hintergrundmusik-Steuerung
-    const audio = document.getElementById('bgAudio');
-    const btn = document.getElementById('audioToggle');
-    let playing = false;
-    btn.addEventListener('click', async () => {
-      if (!playing) {
-        try {
-          await audio.play();
-          playing = true;
-          btn.textContent = '⏸ sound';
-          btn.setAttribute('aria-pressed','true');
-        } catch (err) {
-          console.warn('Autoplay blockiert:', err);
-        }
-      } else {
-        audio.pause();
-        playing = false;
-        btn.textContent = '▶ sound';
-        btn.setAttribute('aria-pressed','false');
-      }
-    });
-  </script>
-<script>
-const sections = document.querySelectorAll('section.image');
+ <script>
+  const audio = document.getElementById('bgAudio');
+  const btn = document.getElementById('audioToggle');
+  let playing = false;
 
-function handleScroll() {
-  const mid = window.innerHeight * 0.6; // mittlerer Auslöser
+  // 1️⃣ stumm starten → Autoplay erlaubt
+  audio.muted = true;
+  audio.volume = 0.8;
 
-  sections.forEach(sec => {
-    const rect = sec.getBoundingClientRect();
-    const middle = rect.top + rect.height / 2;
-    const inView = middle > 0 && middle < window.innerHeight;
-
-    if (inView) {
-      sec.classList.add('visible');
-    } else {
-      sec.classList.remove('visible');
+  // 2️⃣ Autoplay beim Laden
+  window.addEventListener('load', async () => {
+    try {
+      await audio.play();
+      playing = true;
+      btn.textContent = '⏸ sound';
+      btn.setAttribute('aria-pressed','true');
+      console.log('Autoplay (muted) gestartet');
+    } catch (err) {
+      console.warn('Autoplay blockiert:', err);
     }
   });
-}
 
-window.addEventListener('scroll', handleScroll, { passive:true });
-window.addEventListener('load', handleScroll);
-</script>
+  // 3️⃣ erste Nutzeraktion schaltet Ton an
+  function unmuteOnUserAction() {
+    if (audio.muted) {
+      audio.muted = false;
+      console.log('🔊 Sound aktiviert');
+    }
+    window.removeEventListener('scroll', unmuteOnUserAction);
+    window.removeEventListener('pointerdown', unmuteOnUserAction);
+    window.removeEventListener('keydown', unmuteOnUserAction);
+  }
+  window.addEventListener('scroll', unmuteOnUserAction, { once:true });
+  window.addEventListener('pointerdown', unmuteOnUserAction, { once:true });
+  window.addEventListener('keydown', unmuteOnUserAction, { once:true });
+
+  // 4️⃣ Button bleibt Bedienelement
+  btn.addEventListener('click', async () => {
+    if (!playing) {
+      try {
+        await audio.play();
+        playing = true;
+        btn.textContent = '⏸ sound';
+        btn.setAttribute('aria-pressed','true');
+      } catch (err) {
+        console.warn('Play-Fehler:', err);
+      }
+    } else {
+      audio.pause();
+      playing = false;
+      btn.textContent = '▶ sound';
+      btn.setAttribute('aria-pressed','false');
+    }
+  });
+  </script>
 </body>
 </html>
