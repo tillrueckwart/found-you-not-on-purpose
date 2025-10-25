@@ -108,6 +108,12 @@ section.map iframe {
   border: 0;
 }
 
+  section.spacer {
+  height: 20px;            /* nur ein schmaler Übergang */
+  background: linear-gradient(to bottom, #000 0%, #111 100%);
+  border-top: 1px solid rgba(255,255,255,0.05); /* dezente Linie */
+}
+
     /* --- Audio Toggle Button --- */
  #audioToggle {
       position: fixed;
@@ -138,6 +144,8 @@ section.map iframe {
       <p class="hint">(Scrollen, um die Werke zu entdecken)</p>
     </div>
   </section>
+  <section class="spacer"></section>
+
  <!-- 🎞️ Video-Wand mit beweglichen Iframes -->
 <section id="videos">
   <div id="videowall">
@@ -198,6 +206,7 @@ section.map iframe {
   </div>
 </section>
 
+<section class="spacer"></section>
 
   <!-- Google Maps -->
   <section class="map" id="map">
