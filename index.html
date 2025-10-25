@@ -47,10 +47,10 @@ section.intro {
 /* --- Asymmetrische Video-Wand (ohne Überlappung) --- */
 #videowall {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(12, 1fr);
   gap: 10px;
-  width: 95vw;
+  width: 100vw;
   height: 100vh;
   background: #000;
   overflow: hidden;
@@ -77,7 +77,7 @@ section.intro {
 
 /* --- neue, nicht überlappende, asymmetrische Positionen --- */
 .v1 { grid-column: 2 / 3; grid-row: 2 / 3; }
-.v2 { grid-column: 5 / 7; grid-row: 3 / 5; }
+.v2 { grid-column: 6 / 9; grid-row: 1 / 4; }
 .v3 { grid-column: 3 / 4; grid-row: 6 / 7; }
 .v4 { grid-column: 2 / 4; grid-row: 6 / 8; }
 .v5 { grid-column: 5 / 8; grid-row: 8 / 11; }
