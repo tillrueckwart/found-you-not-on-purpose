@@ -45,48 +45,6 @@ section.intro {
 }
 @keyframes introFade { to { opacity: 1; transform: translateY(0); } }
 
-/* --- Scrolltelling mit weichen Bildübergängen --- */
-section.image {
-  position: relative;
-  height: 100vh;                 /* genau eine Bildschirmhöhe */
-  background-size: contain;        /* Bild füllt den Bildschirm */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;  /* wirkt "fixiert" beim Scrollen */
-  opacity: 0;                    /* unsichtbar zu Beginn */
-  transition: opacity 1.5s ease; /* weicher Übergang */
-}
-
-/* Aktive Section – eingeblendet */
-section.image.visible::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.15);
-  pointer-events: none;
-}
-
-/* Text (Caption) */
-section.image .caption {
-  position: absolute;
-  bottom: 10vh;
-  left: 50%;
-  transform: translateX(-50%) translateY(30px);
-  background: rgba(0,0,0,0.55);
-  color: #fff;
-  padding: 1.5rem 2rem;
-  border-radius: 12px;
-  max-width: 700px;
-  text-align: center;
-  opacity: 0;
-  transition: all 1s ease;
-}
-
-/* Sichtbare Caption */
-section.image.visible .caption {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
 
     /* --- Video-Wand --- */
 #videowall {
