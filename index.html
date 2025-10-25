@@ -66,12 +66,22 @@ section.intro {
 
 
     /* --- Google Maps --- */
-    section.map iframe {
-      width: 90%;
-      height: 100%;
-      border: 0;
-      /*filter: grayscale(100%) brightness(0.8);*/
-    }
+   /* --- Google Maps (quadratisch, zentriert) --- */
+section.map {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* nimmt volle Höhe des Viewports ein */
+  background: #000;
+}
+
+section.map iframe {
+  aspect-ratio: 1 / 1;  /* Quadrat */
+  width: 80vmin;        /* 80% der kleineren Bildschirmseite */
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
 
     /* --- Audio Toggle Button --- */
  #audioToggle {
