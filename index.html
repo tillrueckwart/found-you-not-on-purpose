@@ -59,7 +59,7 @@ section.intro {
   overflow: hidden;
   border: none;
   border-radius: 8px;
-  transition: transform 0.2s linear;
+  transition: transform 1s linear;
 }
 
 .video-wrapper iframe {
@@ -226,7 +226,7 @@ const wrappers = document.querySelectorAll('.video-wrapper');
 const speeds = [];
 const positions = [];
 
-// Zufällige Startpositionen & stark reduzierte Bewegungsgeschwindigkeit
+// Zufällige Startpositionen & extrem langsame Bewegungsgeschwindigkeit
 wrappers.forEach((w, i) => {
   const rect = w.getBoundingClientRect();
   positions[i] = {
@@ -234,9 +234,9 @@ wrappers.forEach((w, i) => {
     y: Math.random() * (window.innerHeight - rect.height)
   };
   speeds[i] = {
-    // ⬇️ 20 % des vorherigen Tempos
-    x: (Math.random() * 0.2 + 0.06) * (Math.random() < 0.5 ? 1 : -1),
-    y: (Math.random() * 0.2 + 0.06) * (Math.random() < 0.5 ? 1 : -1)
+    // ⬇️ 10 % vom vorherigen Tempo (sehr langsam)
+    x: (Math.random() * 0.02 + 0.006) * (Math.random() < 0.5 ? 1 : -1),
+    y: (Math.random() * 0.02 + 0.006) * (Math.random() < 0.5 ? 1 : -1)
   };
 });
 
@@ -247,7 +247,7 @@ function animate() {
     positions[i].x += speeds[i].x;
     positions[i].y += speeds[i].y;
 
-    // Kollision mit Wänden
+    // sanftes Abstoßen an den Rändern
     if (positions[i].x <= 0 || positions[i].x + rect.width >= window.innerWidth) {
       speeds[i].x *= -1;
     }
@@ -255,7 +255,7 @@ function animate() {
       speeds[i].y *= -1;
     }
 
-    // Anwenden der Position
+    // Position anwenden
     w.style.transform = `translate(${positions[i].x}px, ${positions[i].y}px)`;
   });
 
@@ -264,6 +264,7 @@ function animate() {
 
 animate();
 </script>
+
 
 
 </body>
