@@ -235,7 +235,7 @@ const wrappers = document.querySelectorAll('.video-wrapper');
 const speeds = [];
 const positions = [];
 
-// Zufällige Startpositionen & extrem langsame Bewegungsgeschwindigkeit
+// Startpositionen & sehr langsame Bewegung
 wrappers.forEach((w, i) => {
   const rect = w.getBoundingClientRect();
   positions[i] = {
@@ -243,10 +243,12 @@ wrappers.forEach((w, i) => {
     y: Math.random() * (window.innerHeight - rect.height)
   };
   speeds[i] = {
-    // ⬇️ 10 % vom vorherigen Tempo (sehr langsam)
     x: (Math.random() * 0.02 + 0.006) * (Math.random() < 0.5 ? 1 : -1),
     y: (Math.random() * 0.02 + 0.006) * (Math.random() < 0.5 ? 1 : -1)
   };
+
+  // Anfangs-Z-Index zufällig
+  w.style.zIndex = Math.floor(Math.random() * 10) + 1;
 });
 
 function animate() {
@@ -256,16 +258,25 @@ function animate() {
     positions[i].x += speeds[i].x;
     positions[i].y += speeds[i].y;
 
-    // sanftes Abstoßen an den Rändern
+    let bounced = false;
+
+    // Randkollisionen erkennen
     if (positions[i].x <= 0 || positions[i].x + rect.width >= window.innerWidth) {
       speeds[i].x *= -1;
+      bounced = true;
     }
     if (positions[i].y <= 0 || positions[i].y + rect.height >= window.innerHeight) {
       speeds[i].y *= -1;
+      bounced = true;
     }
 
-    // Position anwenden
-    w.style.transform = `translate(${positions[i].x}px, ${positions[i].y}px)`;
+    // ✨ Wenn an Wand gestoßen → neuen z-Index vergeben
+    if (bounced) {
+      w.style.zIndex = Math.floor(Math.random() * 10) + 1;
+    }
+
+    // Bewegung anwenden
+    w.style.transform = `translate(${positions[i].x}px, ${positions[i].y}px) scale(0.85)`;
   });
 
   requestAnimationFrame(animate);
@@ -273,6 +284,7 @@ function animate() {
 
 animate();
 </script>
+
 
 
 
