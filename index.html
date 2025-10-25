@@ -52,21 +52,39 @@ section.intro {
   overflow: hidden;
 }
 
-    /* 👇 Hintergrundtext */
+/* 🎧 Hintergrundbeschreibung */
 #videowall .background-text {
   position: absolute;
   inset: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 10vw; /* passt sich Bildschirmgröße an */
-  font-weight: 900;
-  color: rgba(255, 255, 255, 0.3); /* sehr subtil, halbtransparent */
-  letter-spacing: 0.05em;
-  text-shadow: 0 0 40px rgba(255,255,255,0.15);
-  z-index: 0; /* hinter den Videos */
+  padding: 10vw;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 0 0 20px rgba(255,255,255,0.2);
+  z-index: 0;
   user-select: none;
   pointer-events: none;
+  backdrop-filter: blur(3px); /* leicht verschwommene Rückwand */
+  animation: fadeGlow 12s ease-in-out infinite alternate;
+}
+
+/* 💫 Sanftes Leuchten / Pulsieren */
+@keyframes fadeGlow {
+  from {
+    text-shadow: 0 0 20px rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+  }
+  to {
+    text-shadow: 0 0 40px rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.8);
+  }
 }
 
 .video-wrapper {
