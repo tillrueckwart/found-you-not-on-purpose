@@ -24,23 +24,31 @@
       justify-content: center;
     }
     
-    section.spacer {
-  all: unset; /* entfernt alle geerbten Eigenschaften */
+  section.spacer {
+  all: unset; /* entfernt geerbte Layoutvorgaben */
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 60px; /* nur 60 px hoch – kannst du z. B. auf 20px reduzieren */
-  background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(255,255,255,0.05), rgba(0,0,0,0)); /* sanfter Übergang */
-  color: rgba(255,255,255,0.6);
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
+  height: 60px; /* dezente Höhe – kannst du anpassen */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(255, 255, 255, 0.07) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  font-family: system-ui, sans-serif;
+  font-family: "Rubik Glitch", system-ui, sans-serif; /* oder dein gewünschter Font */
   text-align: center;
   user-select: none;
   pointer-events: none;
+  backdrop-filter: blur(2px);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
 }
+
 /* --- Intro --- */
 section.intro {
   min-height: 100vh;
@@ -155,7 +163,7 @@ section.map iframe {
       <p class="hint">(Scrollen, um die Werke zu entdecken)</p>
     </div>
   </section>
-<section class="spacer">transition</section>
+<section class="spacer">stay a little longer, bug</section>
 
  <!-- 🎞️ Video-Wand mit beweglichen Iframes -->
 <section id="videos">
@@ -216,7 +224,7 @@ section.map iframe {
     </div>
   </div>
 </section>
-<section class="spacer">transition</section>
+<section class="spacer">Glitch Archive</section>
 
 
   <!-- Google Maps -->
