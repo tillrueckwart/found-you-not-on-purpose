@@ -5,25 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Orbital Mirage</title>
   <style>
-   html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow-x: hidden;
-  background: #111; /* universale Seitenfarbe, kann schwarz, weiß, grau etc. sein */
-  color: #fff;
-  font-family: system-ui, sans-serif;
-}
+  html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden;
+      background: #111;
+      color: #fff;
+      font-family: system-ui, sans-serif;
+    }
 
     section {
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* overflow: hidden;  ⛔ entfernt, damit background-attachment funktioniert */
-}
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 /* --- Intro --- */
 section.intro {
   min-height: 100vh;
@@ -75,7 +74,7 @@ section.intro {
     }
 
     /* --- Audio Toggle Button --- */
-  #audioToggle {
+ #audioToggle {
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -177,58 +176,60 @@ section.intro {
   </section>
 
  <script>
-  const audio = document.getElementById('bgAudio');
-  const btn = document.getElementById('audioToggle');
-  let playing = false;
+  window.addEventListener('DOMContentLoaded', () => {
+    const audio = document.getElementById('bgAudio');
+    const btn = document.getElementById('audioToggle');
+    let playing = false;
 
-  // 1️⃣ stumm starten → Autoplay erlaubt
-  audio.muted = true;
-  audio.volume = 0.8;
+    // 1️⃣ stumm starten → Autoplay erlaubt
+    audio.muted = true;
+    audio.volume = 0.8;
 
-  // 2️⃣ Autoplay beim Laden
-  window.addEventListener('load', async () => {
-    try {
-      await audio.play();
-      playing = true;
-      btn.textContent = '⏸ sound';
-      btn.setAttribute('aria-pressed','true');
-      console.log('Autoplay (muted) gestartet');
-    } catch (err) {
-      console.warn('Autoplay blockiert:', err);
-    }
-  });
-
-  // 3️⃣ erste Nutzeraktion schaltet Ton an
-  function unmuteOnUserAction() {
-    if (audio.muted) {
-      audio.muted = false;
-      console.log('🔊 Sound aktiviert');
-    }
-    window.removeEventListener('scroll', unmuteOnUserAction);
-    window.removeEventListener('pointerdown', unmuteOnUserAction);
-    window.removeEventListener('keydown', unmuteOnUserAction);
-  }
-  window.addEventListener('scroll', unmuteOnUserAction, { once:true });
-  window.addEventListener('pointerdown', unmuteOnUserAction, { once:true });
-  window.addEventListener('keydown', unmuteOnUserAction, { once:true });
-
-  // 4️⃣ Button bleibt Bedienelement
-  btn.addEventListener('click', async () => {
-    if (!playing) {
+    // 2️⃣ Autoplay beim Laden (stumm)
+    window.addEventListener('load', async () => {
       try {
         await audio.play();
         playing = true;
         btn.textContent = '⏸ sound';
         btn.setAttribute('aria-pressed','true');
+        console.log('Autoplay (muted) gestartet');
       } catch (err) {
-        console.warn('Play-Fehler:', err);
+        console.warn('Autoplay blockiert:', err);
       }
-    } else {
-      audio.pause();
-      playing = false;
-      btn.textContent = '▶ sound';
-      btn.setAttribute('aria-pressed','false');
+    });
+
+    // 3️⃣ erste Nutzeraktion schaltet Ton an
+    function unmuteOnUserAction() {
+      if (audio.muted) {
+        audio.muted = false;
+        console.log('🔊 Sound aktiviert nach Interaktion');
+      }
+      window.removeEventListener('scroll', unmuteOnUserAction);
+      window.removeEventListener('pointerdown', unmuteOnUserAction);
+      window.removeEventListener('keydown', unmuteOnUserAction);
     }
+    window.addEventListener('scroll', unmuteOnUserAction, { once:true });
+    window.addEventListener('pointerdown', unmuteOnUserAction, { once:true });
+    window.addEventListener('keydown', unmuteOnUserAction, { once:true });
+
+    // 4️⃣ Button für Play/Pause
+    btn.addEventListener('click', async () => {
+      if (!playing) {
+        try {
+          await audio.play();
+          playing = true;
+          btn.textContent = '⏸ sound';
+          btn.setAttribute('aria-pressed','true');
+        } catch (err) {
+          console.warn('Play-Fehler:', err);
+        }
+      } else {
+        audio.pause();
+        playing = false;
+        btn.textContent = '▶ sound';
+        btn.setAttribute('aria-pressed','false');
+      }
+    });
   });
   </script>
 </body>
