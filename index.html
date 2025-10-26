@@ -418,24 +418,23 @@ p.neon-text {
 }
 
 @media (max-width: 600px) {
+  /* --- Spacers etwas breiter --- */
   section.spacer > * {
-    max-width: 90%;
+    max-width: 90% !important;
   }
 
-@media (max-width: 600px) {
-  section.spacer > * {
-    max-width: 90%;
-  }
-
-  /* 📱 Mobile Layout für Bilder mit Text */
+  /* --- Bilder mit Text --- */
   .image-block.with-text {
     flex-direction: column;
     align-items: center;
-    text-align: center; /* gesamte Section mittig */
-    gap: 1.2rem;
+    justify-content: center;
+    text-align: center !important;
+    gap: 1.5rem;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
-  /* 🩸 Auch die Richtungsvarianten neutralisieren */
+  /* Richtungsvarianten neutralisieren */
   .image-block.with-text.left,
   .image-block.with-text.right {
     justify-content: center !important;
@@ -444,29 +443,33 @@ p.neon-text {
 
   .image-block.with-text img {
     width: 100%;
-    max-width: 90%;
+    max-width: 90% !important;
   }
 
+  /* --- Captionbereich --- */
   .image-block.with-text .caption {
-    width: 90%;
-    text-align: center;
+    width: 90% !important;
+    max-width: 90% !important;
+    text-align: center !important;
     order: 2;
-    margin-top: 0.8rem;
+    margin-top: 1rem;
   }
 
   .image-block.with-text .caption p {
-    text-align: center;
+    max-width: 90% !important;
+    width: 90% !important;
+    text-align: center !important;
     margin: 0 auto;
-    max-width: 90%;
     line-height: 1.4;
   }
 
+  /* --- QR-Code --- */
   .caption img {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 1rem auto 0 auto;
     display: block;
   }
 
+  /* --- Audio-Button --- */
   #audioToggle {
     bottom: 10px;
     right: 10px;
