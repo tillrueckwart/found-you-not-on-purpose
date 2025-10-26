@@ -417,18 +417,17 @@ p.neon-text {
   to { opacity: 1; transform: translateY(0); }
 }
 
-  /* 💡 HIER KOMMT DIE MEDIA QUERY UNTEN DRAN */
-  @media (max-width: 600px) {
-    section.spacer > * {
-      max-width: 90%;
-    }
+@media (max-width: 600px) {
+  section.spacer > * {
+    max-width: 90%;
+  }
 
-  /* 📱 Bilder & Captions untereinander */
+  /* 📱 Mobile Layout für Bilder mit Text */
   .image-block.with-text {
     flex-direction: column;
     align-items: center;
-    text-align: center; /* gesamte Block-Zentrierung */
-    gap: 1.5rem;
+    text-align: center; /* sorgt für gleichmäßige Platzierung */
+    gap: 1.2rem;
   }
 
   .image-block.with-text img {
@@ -437,25 +436,28 @@ p.neon-text {
   }
 
   .image-block.with-text .caption {
-    width: 100%;
+    width: 90%; /* Textbereich etwas breiter */
     text-align: center;
-    order: 2; /* Text unter das Bild */
-    margin-top: 0.5rem;
+    order: 2;
+    margin-top: 0.8rem;
   }
 
   .image-block.with-text .caption p {
-    text-align: center; /* Textinhalt zentrieren */
+    text-align: center;
     margin: 0 auto;
     max-width: 90%;
+    line-height: 1.4;
   }
 
-    #audioToggle {
-      bottom: 10px;
-      right: 10px;
-      font-size: 0.9rem;
-      padding: 8px 16px;
-    }
+  /* 🔊 Audio-Button kompakter */
+  #audioToggle {
+    bottom: 10px;
+    right: 10px;
+    font-size: 0.9rem;
+    padding: 8px 16px;
   }
+}
+
   </style>
 </head>
 <body>
