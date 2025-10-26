@@ -22,7 +22,7 @@
       padding: 0;
       height: 100%;
       overflow-x: hidden;
-      background: rgba(232,232,232);
+      background: #000;
       color: #fff;
      font-family: 'Outfit', sans-serif;
      font-weight: 400; /* Standardgewicht für Fließtext */
@@ -125,7 +125,7 @@ section.intro {
   display: flex;
   align-items: center;   /* vertikal zentriert */
   justify-content: center; /* horizontal zentriert */
-  background: rgba(232,232,232);      /* schwarzer Hintergrund */
+  background: #000;      /* schwarzer Hintergrund */
   text-align: center;
   color: #fff;           /* Grundfarbe Weiß */
   animation: introFadeIn 1.2s ease-out forwards;
