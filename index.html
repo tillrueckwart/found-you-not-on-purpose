@@ -435,6 +435,72 @@ section.map iframe {
   filter: brightness(0.9) contrast(0.9) opacity(0.65); /* kontrollierte Transparenz */
   transition: all 0.4s ease;
 }
+/* === 🔴 Einheitlicher Neon-Text-Look === */
+.neon-text {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  line-height: 1;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Innenfüllung */
+.neon-text .fill {
+  position: relative;
+  color: #fff;
+  text-shadow:
+    0 0 20px rgba(255, 0, 0, 0.5),
+    0 0 40px rgba(255, 0, 0, 0.35),
+    0 0 60px rgba(255, 0, 0, 0.25);
+  z-index: 1;
+}
+
+/* Outline-Ebene */
+.neon-text .stroke {
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  -webkit-text-stroke: 2.5px crimson;
+  text-stroke: 2.5px crimson;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Variationen: Größe nach Elementtyp */
+h1.neon-text {
+  font-size: clamp(2.8rem, 6.5vw, 7rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+}
+
+h2.neon-text {
+  font-size: clamp(1.6rem, 3vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+h3.neon-text {
+  font-size: clamp(1.2rem, 2vw, 2rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+p.neon-text {
+  font-size: clamp(1rem, 1.6vw, 1.8rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* Sanftes Einblenden, optional */
+.neon-text {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: neonFade 1.4s ease-out 0.3s forwards;
+}
+@keyframes neonFade {
+  to { opacity: 1; transform: translateY(0); }
+}
 
 
   </style>
@@ -449,10 +515,10 @@ section.map iframe {
   
  <section class="intro">
   <div class="intro-content">
-    <h1 class="glow-title">
-      <span class="fill">i found you not<br>on purpose</span>
-      <span class="stroke">i found you not<br>on purpose</span>
-    </h1>
+    <h1 class="neon-text">
+  <span class="fill">i found you not<br>on purpose</span>
+  <span class="stroke">i found you not<br>on purpose</span>
+</h1>
   </div>
 </section>
 
@@ -469,7 +535,10 @@ section.map iframe {
 </section>
 
   <section class="spacer">
- <h2>salty glitches</h2>
+ <h2 class="neon-text">
+  <span class="fill">salty glitches</span>
+  <span class="stroke">salty glitches</span>
+</h2>
     <p>six archival prints of approx. 400 screenshots, qr-codes</p>
 </section>
   <!-- 🔹 Galerie-Sektion: fade-in Bilder -->
