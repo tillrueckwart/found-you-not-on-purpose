@@ -49,14 +49,13 @@
 }
 
 /* --- Intro --- */
-section.intro {
+ection.intro {
   position: relative;
   width: 100%;
   overflow: hidden;
   text-align: center;
-  color: rgba(220, 20, 60, 0.7);
-  animation: introFadeIn 1.5s ease 0.2s forwards;
   opacity: 0;
+  animation: introFadeIn 1.2s ease-out forwards; /* kürzer & smoother */
 }
 
 /* Hintergrundbild */
@@ -65,8 +64,8 @@ section.intro {
   width: 100%;
   height: auto;
   object-fit: cover;
-  animation: imageFade 2s ease 0.2s forwards;
   opacity: 0;
+  animation: introFadeIn 1.2s ease-out forwards; /* gleiches Timing wie Text */
 }
 
 /* Text auf Bild */
@@ -82,37 +81,35 @@ section.intro {
   text-shadow:
     0 0 12px rgba(255, 0, 0, 0.6),
     0 0 24px rgba(255, 0, 0, 0.4);
-  animation: textFade 2s ease 0.8s forwards;
+  animation: textFade 1.4s ease 0.3s forwards;
   opacity: 0;
 }
 
 /* Größere, responsive Typografie */
 .intro-content h1 {
-  font-size: clamp(3rem, 8vw, 9rem); /* skaliert mit Viewport */
+  font-size: clamp(3.5rem, 8vw, 9rem);
   letter-spacing: 0.05em;
   margin: 0 0 1rem 0;
   line-height: 1.1;
 }
 
 .intro-content p {
-  font-size: clamp(1.2rem, 2.4vw, 2.4rem);
-  line-height: 1.4;
+  font-size: clamp(1.4rem, 2.6vw, 2.5rem);
+  line-height: 1.5;
   margin: 0.5rem 0;
 }
 
 .intro-content .hint {
-  font-size: clamp(1rem, 1.5vw, 1.4rem);
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
   opacity: 0.7;
-  margin-top: 1.2rem;
+  margin-top: 1rem;
+  argin-top: 1.2rem;
 }
 
 /* --- Keyframes --- */
 @keyframes introFadeIn {
-  to { opacity: 1; }
-}
-
-@keyframes imageFade {
-  to { opacity: 1; }
+  from { opacity: 0; transform: scale(1.02); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 @keyframes textFade {
@@ -208,16 +205,14 @@ section.map iframe {
 
   <!-- Intro -->
   <section class="intro">
-    <section class="image" style="background-image: url('assets/Salty_Glitches_001.jpg');">
-    <div class="intro-content">
+  <img class="intro-bg" src="assets/Salty_Glitches_001.jpg" alt="Intro Background">
+  <div class="intro-content">
       <h1>Orbital Mirage</h1>
       <p>Till Rückwart</p>
       <p class="hint">(Scroll to skim through the works)</p>
     </div>
   </section>
-    </section>
-
-
+   
 <section class="spacer">
   <h2>stay a little longer, bug </h2>
 <p>16-channel installation, videos (12:38 to 16:54 min), Sound (20:28 min)</p>
