@@ -73,7 +73,7 @@ section.intro {
   position: absolute;
   bottom: 8%; /* Abstand vom unteren Rand */
   left: 50%;
-  transform: translate(-50%, -50%) scale(1);
+ transform: translateX(-50%);
   text-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
   color: transparent;
   -webkit-text-stroke: 8px crimson;
@@ -83,6 +83,7 @@ section.intro {
     0 0 24px rgba(255, 0, 0, 1);
   animation: textFade 1.4s ease 0.3s forwards;
   opacity: 0;
+  pointer-events: none; /* verhindert, dass Text Klicks blockiert */
 }
 
 /* Größere, responsive Typografie */
