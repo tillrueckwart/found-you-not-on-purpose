@@ -255,7 +255,7 @@ section.map iframe {
     inset 0 0 10px rgba(255, 0, 0, 0.3);
 }
 
-/* --- Bild-Showcase --- */
+/* --- Bild-Showcase (Grundlayout) --- */
 .image-showcase {
   width: 100%;
   background: #000;
@@ -266,9 +266,9 @@ section.map iframe {
   padding: 10vh 0;
 }
 
-/* Einzelnes Bild */
+/* --- Standardbilder (001, 002 etc.) --- */
 .image-block {
-  width: 85%; /* zentriert & begrenzt */
+  width: 85%; /* Standardbreite */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -276,14 +276,33 @@ section.map iframe {
 
 .image-block img {
   width: 100%;
-  height: auto; /* behält Original-Ratio! */
+  height: auto;
   object-fit: contain;
   box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
   transition: transform 1s ease, opacity 1s ease;
   opacity: 0.95;
 }
 
-/* Sanftes Einblenden beim Scrollen */
+/* --- Variation für 1:1-Bilder --- */
+.image-showcase .image-block:nth-child(3) {
+  width: 60%;
+  align-self: flex-end; /* rechtsbündig */
+  margin-right: 5%;
+}
+
+.image-showcase .image-block:nth-child(4) {
+  width: 60%;
+  align-self: flex-start; /* linksbündig */
+  margin-left: 5%;
+}
+
+.image-showcase .image-block:nth-child(5),
+.image-showcase .image-block:nth-child(6) {
+  width: 65%;
+  align-self: center; /* zentriert */
+}
+
+/* --- sanftes Einblenden beim Scrollen --- */
 .image-block img.visible {
   opacity: 1;
   transform: scale(1.02);
@@ -294,6 +313,7 @@ section.map iframe {
   transform: scale(1.04);
   opacity: 1;
 }
+
 
   </style>
 </head>
