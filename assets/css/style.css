@@ -500,19 +500,20 @@ p.neon-text {
     margin-top: 1rem;
   }
 
-  /* Optional: Caption über dem Bild (wenn du willst) */
-  /*
-  .image-block.with-text.over .caption {
-    order: 0;
-    margin-bottom: 1rem;
-  }
-  */
 
   .image-block.with-text .caption p {
     max-width: 90% !important;
     text-align: center !important;
     margin: 0 auto;
     line-height: 1.4;
+  }
+
+   .image-block.with-text.left .caption,
+  .image-block.with-text.left .caption p,
+  .image-block.with-text.right .caption,
+  .image-block.with-text.right .caption p {
+    text-align: center !important;
+    margin: 0 auto !important;
   }
 
   /* --- QR-Code --- */
