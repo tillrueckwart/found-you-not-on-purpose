@@ -90,25 +90,43 @@ section.spacer h3 {
   text-shadow: none;
 }
 
-/* Stil für Absatz */
-/* global shared look */
+/* === Einheitlicher Textstil für Fließtext, Captions & Videowall === */
 section.spacer p,
-#videowall .background-text,
-.caption p {
-  color: rgba(255,228,225, 0.9);
+.caption p,
+#videowall .background-text {
+  color: rgba(255,228,225, 0.9); /* zart-rosa */
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  font-size: clamp(1rem, 1.5vw, 1.6rem); /* Einheitlich skaliert */
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  opacity: 0.9;
   text-shadow:
     0 0 6px rgba(255, 0, 0, 0.15),
     0 0 12px rgba(255, 0, 0, 0.08);
-  font-family: 'Outfit', sans-serif;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.01em;
-  opacity: 0.9;
 }
 
-/* individual adjustments */
-section.spacer p { text-align: center; }
-.caption p { font-size: clamp(1rem, 1.5vw, 1.6rem); line-height: 1.3; }
+/* --- Layout-Anpassungen pro Bereich --- */
+section.spacer p {
+  text-align: center;
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.caption p {
+  text-align: left; /* bleibt bei Desktop nebeneinander */
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+#videowall .background-text {
+  text-align: center;
+  max-width: 90vw;
+  margin: 0 auto;
+  padding: 10vw;
+  backdrop-filter: blur(4px);
+}
 
 /* --- Intro --- */
 section.intro {
@@ -166,17 +184,6 @@ section.intro {
   background: #000;
   overflow: hidden;
 }
-
-/* 🎧 Hintergrundbeschreibung */
-#videowall .background-text {
-  font-size: clamp(1.1rem, 1.6vw, 1.8rem);
-  max-width: 95vw;
-  margin: 0 auto;
-  padding: 10vw;
-  backdrop-filter: blur(4px);
-  text-align: center;
-}
-    
 
 .video-wrapper {
   position: absolute;
