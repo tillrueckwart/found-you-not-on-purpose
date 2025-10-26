@@ -358,13 +358,21 @@ section.map iframe {
   letter-spacing: 0.05em;
 }
 
-/* --- Hover subtil --- */
-.image-block img:hover {
-  transform: scale(1.01);
-  opacity: 1;
+/* === QR-Code-Styling in der Caption === */
+.caption img {
+  display: block;
+  width: 50%;               /* 🔹 halb so groß */
+  max-width: 160px;         /* verhindert zu große Darstellung auf breiten Screens */
+  margin: 1.5rem auto 0 auto;
+  opacity: 0.55;            /* leicht transparent (55%) */
+  border: 2px solid crimson; /* roter Rand wie Text-Kontur */
+  border-radius: 8px;
+  box-shadow:
+    0 0 20px rgba(255, 0, 0, 0.3),
+    0 0 40px rgba(255, 0, 0, 0.15);
+  filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
-
-
 
   </style>
 </head>
