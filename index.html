@@ -229,7 +229,7 @@ section.map iframe {
 <body>
 
 <audio id="bgAudio" src="assets/stay-longer-bug-1.mp3" loop preload="auto"></audio>
-  <button id="audioToggle" aria-pressed="false">▶ sound</button>
+  <button id="audioToggle" aria-pressed="false">sound</button>
 
 
   <!-- Intro -->
@@ -374,7 +374,7 @@ section.map iframe {
     try {
       await audio.play();
       playing = true;
-      btn.textContent = '⏸ sound';
+      btn.textContent = 'sound';
       btn.setAttribute('aria-pressed', 'true');
       btn.classList.add('active'); // 🔴 Leuchten aktivieren
     } catch (err) {
