@@ -423,16 +423,31 @@ p.neon-text {
       max-width: 90%;
     }
 
-    .image-block.with-text img {
-      width: 100%;
-    }
+  /* 📱 Bilder & Captions untereinander */
+  .image-block.with-text {
+    flex-direction: column;
+    align-items: center;
+    text-align: center; /* gesamte Block-Zentrierung */
+    gap: 1.5rem;
+  }
 
-    .image-block.with-text .caption {
-      width: 100%;
-      text-align: center;
-      order: 2;
-      margin-top: 1rem;
-    }
+  .image-block.with-text img {
+    width: 100%;
+    max-width: 90%;
+  }
+
+  .image-block.with-text .caption {
+    width: 100%;
+    text-align: center;
+    order: 2; /* Text unter das Bild */
+    margin-top: 0.5rem;
+  }
+
+  .image-block.with-text .caption p {
+    text-align: center; /* Textinhalt zentrieren */
+    margin: 0 auto;
+    max-width: 90%;
+  }
 
     #audioToggle {
       bottom: 10px;
