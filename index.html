@@ -470,11 +470,12 @@ p.neon-text {
     max-width: 90% !important;
     text-align: center !important;
   }
+
   /* --- Bilder mit Text --- */
   .image-block.with-text {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column !important; /* Bild & Text untereinander */
+    align-items: center !important;
+    justify-content: center !important;
     text-align: center !important;
     gap: 1.5rem;
     width: 100% !important;
@@ -484,13 +485,17 @@ p.neon-text {
   /* Richtungsvarianten neutralisieren */
   .image-block.with-text.left,
   .image-block.with-text.right {
+    flex-direction: column !important;
     justify-content: center !important;
     text-align: center !important;
   }
 
+  /* --- Bildgröße --- */
   .image-block.with-text img {
     width: 100%;
     max-width: 90% !important;
+    height: auto;
+    order: 1; /* Bild zuerst */
   }
 
   /* --- Captionbereich --- */
@@ -498,25 +503,31 @@ p.neon-text {
     width: 90% !important;
     max-width: 90% !important;
     text-align: center !important;
-    order: 2;
+    order: 2; /* Caption unter dem Bild */
     margin-top: 1rem;
   }
 
+  /* Optional: Caption über dem Bild (wenn du willst) */
+  /*
+  .image-block.with-text.over .caption {
+    order: 0;
+    margin-bottom: 1rem;
+  }
+  */
+
   .image-block.with-text .caption p {
     max-width: 90% !important;
-    width: 90% !important;
     text-align: center !important;
     margin: 0 auto;
     line-height: 1.4;
   }
 
-  /* --- QR-Code (mobile: 25 %) --- */
+  /* --- QR-Code --- */
   .caption img {
     margin: 1rem auto 0 auto;
     display: block;
     width: 25% !important;
     max-width: 120px;
-    transition: all 0.4s ease;
   }
 
   /* --- Audio-Button --- */
@@ -527,9 +538,6 @@ p.neon-text {
     padding: 8px 16px;
   }
 }
-
-
-
 
   </style>
 </head>
