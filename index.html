@@ -367,30 +367,29 @@ section.map iframe {
   letter-spacing: 0.05em;
 }
 
-/* === QR-Code-Styling in der Caption === */
+/* === QR-Code-Styling (final & funktionsfähig) === */
 .caption img {
-  position: relative;
+  display: block;
   width: 40%;
   max-width: 100px;
   margin-top: 1.5rem;
   margin-left: auto;
+  margin-right: 0;
   border: 2px solid crimson;
   border-radius: 8px;
+
+  /* 🩸 Roter Leuchteffekt */
   box-shadow:
     0 0 20px rgba(255, 0, 0, 0.3),
-    0 0 40px rgba(255, 0, 0, 0.15);
-  filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
+    0 0 40px rgba(255, 0, 0, 0.15),
+    inset 0 0 10px rgba(255, 0, 0, 0.25);
+
+  /* ✨ leichte Transparenz nur fürs Bild (nicht für Rahmen!) */
+  background-color: rgba(255, 255, 255, 0.08);
+  filter: brightness(0.9) contrast(0.9) opacity(0.65); /* kontrollierte Transparenz */
   transition: all 0.4s ease;
 }
 
-.caption img::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.45); /* 45% Weiß-Schleier über dem Code */
-  border-radius: 8px;
-  pointer-events: none;
-}
 
   </style>
 </head>
