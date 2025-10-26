@@ -116,7 +116,7 @@ section.spacer p {
 
 .caption p {
   max-width: 90%;
-  margin: 0 auto;
+  margin: 0;
 }
 
 #videowall .background-text {
@@ -333,7 +333,11 @@ section.map iframe {
   text-align: right;
   align-self: center;
 }
-
+.image-block.with-text.left .caption p {
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
+}
 /* --- Text links vom Bild --- */
 .image-block.with-text.right {
   flex-direction: row-reverse; /* Bild rechts, Text links */
