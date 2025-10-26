@@ -318,7 +318,15 @@ section.map iframe {
 .image-block.with-text.right .caption p {
   text-align: left;
   order: -1; /* Text links vom Bild */
-  width: 35%;
+  width: 45%; /* statt 35% */
+  max-width: 550px; /* Begrenzung für sehr breite Screens */
+}
+
+.image-block.with-text.left .caption,
+.image-block.with-text.left .caption p {
+  text-align: right;
+  width: 45%; /* statt 35% */
+  max-width: 550px;
 }
 
 /* Bild links, Text rechts */
