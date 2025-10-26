@@ -360,20 +360,27 @@ section.map iframe {
 
 /* === QR-Code-Styling in der Caption === */
 .caption img {
-  display: block;
+  position: relative;
   width: 50%;
   max-width: 160px;
   margin-top: 1.5rem;
-  margin-left: 0;
-  margin-right: auto;
+  margin-left: auto;
   border: 2px solid crimson;
   border-radius: 8px;
   box-shadow:
     0 0 20px rgba(255, 0, 0, 0.3),
     0 0 40px rgba(255, 0, 0, 0.15);
-  filter: brightness(1.1) contrast(0.8) drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
+  filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
   transition: all 0.4s ease;
-  background: rgba(255, 255, 255, 0.1); /* leichter Schleier hinter transparenten Bereichen */
+}
+
+.caption img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.45); /* 45% Weiß-Schleier über dem Code */
+  border-radius: 8px;
+  pointer-events: none;
 }
 
   </style>
