@@ -300,14 +300,19 @@ section.map iframe {
   transform: scale(1.02);
 }
 
-/* --- Variation für Bilder mit Text (1:1-Formate) --- */
+/* === Captions richtig neben Bildern platzieren === */
+
+/* Container für Bild + Text */
 .image-block.with-text {
-  width: 90%;
-  max-width: 1200px;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 5vw;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: nowrap; /* ❗ verhindert Untereinander */
 }
 
 /* Bildgröße */
@@ -318,20 +323,10 @@ section.map iframe {
   object-fit: contain;
 }
 
-/* --- Text links vom Bild (Bild rechts) --- */
-.image-block.with-text.right {
-  flex-direction: row-reverse;
-}
-
-.image-block.with-text.right .caption {
-  width: 40%;
-  text-align: left;
-  align-self: center;
-}
-
-/* --- Text rechts vom Bild (Bild links) --- */
+/* --- Text rechts vom Bild --- */
 .image-block.with-text.left {
-  flex-direction: row;
+  flex-direction: row; /* Bild links, Text rechts */
+  justify-content: flex-start;
 }
 
 .image-block.with-text.left .caption {
@@ -340,7 +335,19 @@ section.map iframe {
   align-self: center;
 }
 
-/* --- Allgemeine Caption-Typografie --- */
+/* --- Text links vom Bild --- */
+.image-block.with-text.right {
+  flex-direction: row-reverse; /* Bild rechts, Text links */
+  justify-content: flex-end;
+}
+
+.image-block.with-text.right .caption {
+  width: 40%;
+  text-align: left;
+  align-self: center;
+}
+
+/* --- Typografie --- */
 .caption p {
   color: rgba(255,228,225, 0.9);
   font-family: 'Outfit', sans-serif;
@@ -355,12 +362,14 @@ section.map iframe {
   opacity: 0.95;
 }
 
-/* --- QR-Code in Caption --- */
+/* --- QR-Code-Stil --- */
 .caption img {
   display: block;
   width: 40%;
   max-width: 100px;
   margin-top: 1.5rem;
+  margin-left: auto;
+  margin-right: 0;
   border: 2px solid crimson;
   border-radius: 8px;
   background-color: rgba(255,255,255,0.9);
