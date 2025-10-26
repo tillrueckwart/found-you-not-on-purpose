@@ -244,7 +244,7 @@ section.map iframe {
    
 <section class="spacer">
   <h2>stay a little longer, bug </h2>
-<p>16-channel installation, videos (12:38 to 16:54 min), Sound (20:28 min)</p>
+<p>16-channel installation, videos (12:38 to 16:54 min), sound (20:28 min)</p>
 </section>
 
  <!-- 🎞️ Video-Wand mit beweglichen Iframes -->
@@ -330,7 +330,7 @@ section.map iframe {
       try {
         await audio.play();
         playing = true;
-        btn.textContent = '⏸ sound';
+        btn.textContent = 'sound';
         btn.setAttribute('aria-pressed', 'true');
         console.log('Autoplay (muted) gestartet');
       } catch (err) {
@@ -383,7 +383,7 @@ section.map iframe {
   } else {
     audio.pause();
     playing = false;
-    btn.textContent = '▶ sound';
+    btn.textContent = 'sound';
     btn.setAttribute('aria-pressed', 'false');
     btn.classList.remove('active'); // 🔴 Leuchten deaktivieren
   }
