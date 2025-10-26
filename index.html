@@ -48,67 +48,76 @@
   text-shadow: 0 0 8px rgba(255,255,255, 0.15);
 }
 
-/* --- Intro --- */
+/* --- Intro mit Bild --- */
 section.intro {
   position: relative;
   width: 100%;
   overflow: hidden;
   text-align: center;
   opacity: 0;
-  animation: introFadeIn 1.2s ease-out forwards; /* kürzer & smoother */
+  animation: introFadeIn 1.2s ease-out forwards;
 }
 
-/* Hintergrundbild */
+/* Bild */
 .intro-bg {
   display: block;
   width: 100%;
   height: auto;
   object-fit: cover;
   opacity: 0;
-  animation: introFadeIn 1.2s ease-out forwards; /* gleiches Timing wie Text */
+  animation: introFadeIn 1.2s ease-out forwards;
 }
 
-/* Text auf Bild */
+/* Text unten zentriert */
 .intro-content {
   position: absolute;
   bottom: 8%; /* Abstand vom unteren Rand */
   left: 50%;
- transform: translateX(-50%);
-  text-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: 0;
+  animation: textFade 1.4s ease-out 0.3s forwards;
+  pointer-events: none;
+}
+
+/* --- TITEL (h1) --- */
+.intro-content h1 {
+  font-size: clamp(2.8rem, 6.5vw, 7rem);
+  letter-spacing: 0.02em;
+  margin: 0 0 0.5rem 0;
+  line-height: 0.9; /* dichter zusammen */
   color: transparent;
-  -webkit-text-stroke: 8px crimson;
+  -webkit-text-stroke: 8px crimson; /* kräftige Outline */
   text-stroke: 8px crimson;
   text-shadow:
-    0 0 12px rgba(255, 0, 0, 1),
-    0 0 24px rgba(255, 0, 0, 1);
-  animation: textFade 1.4s ease 0.3s forwards;
-  opacity: 0;
-  pointer-events: none; /* verhindert, dass Text Klicks blockiert */
+    0 0 25px rgba(255, 0, 0, 0.6),
+    0 0 50px rgba(255, 0, 0, 0.3);
 }
 
-/* Größere, responsive Typografie */
-.intro-content h1 {
-  font-size: clamp(3.5rem, 8vw, 9rem);
-  letter-spacing: 0.05em;
-  margin: 0 0 1rem 0;
-  line-height: 1.1;
-}
-
-.intro-content p {
-  font-size: clamp(1.1rem, 2.2vw, 2rem);
-  line-height: 1.5;
-  text-stroke: 1px crimson;
-  margin: 0.5rem 0;
-}
-
+/* --- UNTERTEXT --- */
+.intro-content p,
 .intro-content .hint {
-  font-size: clamp(0.6rem, 1.2vw, 1rem);
-  opacity: 0.7;
-  text-stroke: 1px crimson;
-  margin-top: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  -webkit-text-stroke: 1.5px rgba(255, 0, 0, 0.6);
+  text-stroke: 1.5px rgba(255, 0, 0, 0.6);
+  text-shadow:
+    0 0 10px rgba(255, 0, 0, 0.3),
+    0 0 20px rgba(255, 0, 0, 0.2);
+  font-size: clamp(1rem, 1.6vw, 1.8rem);
+  line-height: 1.1;
+  margin: 0.4rem 0;
 }
 
-/* --- Keyframes --- */
+/* --- Hinweis kleiner & dezenter --- */
+.intro-content .hint {
+  font-size: clamp(0.8rem, 1.2vw, 1.2rem);
+  opacity: 0.8;
+  margin-top: 0.4rem;
+  -webkit-text-stroke: 1px rgba(255, 0, 0, 0.5);
+  text-stroke: 1px rgba(255, 0, 0, 0.5);
+}
+
+/* --- Animationen --- */
 @keyframes introFadeIn {
   from { opacity: 0; transform: scale(1.02); }
   to   { opacity: 1; transform: scale(1); }
@@ -118,6 +127,7 @@ section.intro {
   from { opacity: 0; transform: translateX(-50%) translateY(10px); }
   to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
+
 
   /* --- Bewegliche Video-Wand --- */
 #videowall {
