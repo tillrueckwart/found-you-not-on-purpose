@@ -50,43 +50,74 @@
 
 /* --- Intro --- */
 section.intro {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #000;
-  color: rgba(220, 20, 60, 0.7); /* leicht transparentes Rot für Füllung */
+  position: relative;
+  width: 100%;
+  overflow: hidden;
   text-align: center;
-  padding: 2rem;
-  animation: introImage 1.5s ease 0.5s forwards;
+  color: rgba(220, 20, 60, 0.7);
+  animation: introFadeIn 1.5s ease 0.2s forwards;
+  opacity: 0;
 }
 
-/* Breite, kräftige rote Kontur */
-section.intro h1,
-section.intro p {
-  -webkit-text-stroke: 2px crimson; /* kräftige rote Outline */
-  text-stroke: 2px crimson; /* für andere Browser */
-  color: transparent; /* nur die Kontur sichtbar */
+/* Hintergrundbild */
+.intro-bg {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  animation: imageFade 2s ease 0.2s forwards;
+  opacity: 0;
+}
+
+/* Text auf Bild */
+.intro-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  text-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+  color: transparent;
+  -webkit-text-stroke: 2px crimson;
+  text-stroke: 2px crimson;
   text-shadow:
     0 0 12px rgba(255, 0, 0, 0.6),
-    0 0 24px rgba(255, 0, 0, 0.4); /* leichtes Glühen für Tiefe */
-  letter-spacing: 0.04em;
-}
-
-/* sanftes Einblenden */
-@keyframes introImage {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.intro-content {
-  max-width: 800px;
+    0 0 24px rgba(255, 0, 0, 0.4);
+  animation: textFade 2s ease 0.8s forwards;
   opacity: 0;
-  transform: translateY(20px);
-  animation: introFade 1.5s ease 0.5s forwards;
 }
 
-@keyframes introFade {
-  to { opacity: 1; transform: translateY(0); }
+/* Größere, responsive Typografie */
+.intro-content h1 {
+  font-size: clamp(3rem, 8vw, 9rem); /* skaliert mit Viewport */
+  letter-spacing: 0.05em;
+  margin: 0 0 1rem 0;
+  line-height: 1.1;
+}
+
+.intro-content p {
+  font-size: clamp(1.2rem, 2.4vw, 2.4rem);
+  line-height: 1.4;
+  margin: 0.5rem 0;
+}
+
+.intro-content .hint {
+  font-size: clamp(1rem, 1.5vw, 1.4rem);
+  opacity: 0.7;
+  margin-top: 1.2rem;
+}
+
+/* --- Keyframes --- */
+@keyframes introFadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes imageFade {
+  to { opacity: 1; }
+}
+
+@keyframes textFade {
+  0%   { opacity: 0; transform: translate(-50%, -48%) scale(0.98); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
   /* --- Bewegliche Video-Wand --- */
