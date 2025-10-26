@@ -255,25 +255,28 @@ section.map iframe {
     inset 0 0 10px rgba(255, 0, 0, 0.3);
 }
 
-/* --- Bild-Showcase (Grundlayout) --- */
+/* === Bild-Showcase === */
 .image-showcase {
   width: 100%;
   background: #000;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20vh; /* großzügiger Abstand zwischen Bildern */
+  gap: 20vh;
   padding: 10vh 0;
 }
 
-/* --- Standardbilder (001, 002 etc.) --- */
+/* --- Grundlayout --- */
 .image-block {
-  width: 85%; /* Standardbreite */
+  width: 85%;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 5vw;
+  flex-wrap: wrap; /* für Mobile */
 }
 
+/* --- Bilder --- */
 .image-block img {
   width: 100%;
   height: auto;
@@ -281,38 +284,80 @@ section.map iframe {
   box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
   transition: transform 1s ease, opacity 1s ease;
   opacity: 0.95;
+  max-width: 100%;
 }
 
-/* --- Variation für 1:1-Bilder --- */
-.image-showcase .image-block:nth-child(3) {
-  width: 50%;
-  align-self: flex-end; /* rechtsbündig */
-  margin-right: 5%;
-}
-
-.image-showcase .image-block:nth-child(4) {
-  width: 50%;
-  align-self: flex-start; /* linksbündig */
-  margin-left: 5%;
-}
-
-.image-showcase .image-block:nth-child(5),
-.image-showcase .image-block:nth-child(6) {
-  width: 50%;
-  align-self: center; /* zentriert */
-}
-
-/* --- sanftes Einblenden beim Scrollen --- */
+/* sanftes Einblenden (wenn Intersection Observer aktiv ist) */
 .image-block img.visible {
   opacity: 1;
   transform: scale(1.02);
 }
 
-/* Optional: leichte Hover-Reaktion */
+/* --- Variation für Bilder mit Text (1:1-Formate) --- */
+.image-block.with-text {
+  width: 90%;
+  max-width: 1200px;
+}
+
+.image-block.with-text img {
+  width: 55%;
+  height: auto;
+  flex-shrink: 0;
+}
+
+/* Bild rechts, Text links */
+.image-block.with-text.right {
+  justify-content: flex-end;
+  text-align: left;
+}
+.image-block.with-text.right .caption {
+  order: -1; /* Text links vom Bild */
+  width: 35%;
+}
+
+/* Bild links, Text rechts */
+.image-block.with-text.left {
+  justify-content: flex-start;
+  text-align: right;
+}
+.image-block.with-text.left .caption {
+  width: 35%;
+}
+
+/* --- Caption-Style: wie Intro-Text --- */
+.caption p {
+  font-size: clamp(1rem, 1.6vw, 1.8rem);
+  line-height: 1.1;
+  margin: 0.4rem 0;
+  color: #fff;
+  -webkit-text-stroke: 1.5px rgba(255, 0, 0, 0.6);
+  text-stroke: 1.5px rgba(255, 0, 0, 0.6);
+  text-shadow:
+    0 0 10px rgba(255, 0, 0, 0.3),
+    0 0 20px rgba(255, 0, 0, 0.2);
+  opacity: 0.9;
+}
+
+.caption strong {
+  display: block;
+  font-size: clamp(1.1rem, 1.8vw, 2rem);
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.55);
+  -webkit-text-stroke: 2px crimson;
+  text-stroke: 2px crimson;
+  text-shadow:
+    0 0 25px rgba(255, 0, 0, 0.6),
+    0 0 50px rgba(255, 0, 0, 0.3);
+  line-height: 1;
+  letter-spacing: 0.05em;
+}
+
+/* --- Hover subtil --- */
 .image-block img:hover {
-  transform: scale(1.04);
+  transform: scale(1.01);
   opacity: 1;
 }
+
 
 
   </style>
@@ -352,11 +397,21 @@ section.map iframe {
   <div class="image-block">
     <img src="assets/Salty_Glitches_002.jpg" alt="Salty Glitch 002">
   </div>
-  <div class="image-block">
+  <div class="image-block with-text right">
     <img src="assets/Salty_Glitches_003.jpg" alt="Salty Glitch 003">
+    <div class="caption">
+      <p><strong>Salty Glitch 003</strong><br>
+      This image marks the moment when digital mapping collapses into abstraction —  
+      where pixels dissolve into pure geography of color.</p>
+    </div>
   </div>
-  <div class="image-block">
+  <div class="image-block with-text left">
     <img src="assets/Salty_Glitches_004.jpg" alt="Salty Glitch 004">
+    <div class="caption">
+      <p><strong>Salty Glitch 004</strong><br>
+      A quiet interference, almost painterly —  
+      as if the algorithm tried to reconstruct memory itself.</p>
+    </div>
   </div>
     <div class="image-block">
     <img src="assets/Salty_Glitches_005.jpg" alt="Salty Glitch 005">
