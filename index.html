@@ -667,5 +667,28 @@ window.addEventListener('resize', () => {
 });
 animate();
 </script>
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const frames = document.querySelectorAll('.image-frame');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const qr = entry.target.querySelector('.qr-overlay');
+      if (entry.isIntersecting) {
+        // Einblenden + Scrollbewegung nach oben
+        qr.style.opacity = '1';
+        qr.style.transform = 'translateY(-25%)';
+      } else {
+        // Zurück nach unten
+        qr.style.opacity = '0';
+        qr.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.5 });
+
+  frames.forEach(frame => observer.observe(frame));
+});
+</script>
+
 </body>
 </html>
