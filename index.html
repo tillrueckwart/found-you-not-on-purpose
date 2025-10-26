@@ -55,12 +55,27 @@ section.intro {
   align-items: center;
   justify-content: center;
   background: #000;
-  color: rgba(220, 20, 60, 0.7);
+  color: rgba(220, 20, 60, 0.7); /* leicht transparentes Rot für Füllung */
   text-align: center;
   padding: 2rem;
   animation: introImage 1.5s ease 0.5s forwards;
 }
-@keyframes introImage { to { opacity: 1; transform: translateY(0); } }
+
+/* Breite, kräftige rote Kontur */
+section.intro h1,
+section.intro p {
+  -webkit-text-stroke: 2px crimson; /* kräftige rote Outline */
+  text-stroke: 2px crimson; /* für andere Browser */
+  color: transparent; /* nur die Kontur sichtbar */
+  text-shadow:
+    0 0 12px rgba(255, 0, 0, 0.6),
+    0 0 24px rgba(255, 0, 0, 0.4); /* leichtes Glühen für Tiefe */
+  letter-spacing: 0.04em;
+}
+
+/* sanftes Einblenden */
+@keyframes introImage {
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .intro-content {
@@ -69,7 +84,10 @@ section.intro {
   transform: translateY(20px);
   animation: introFade 1.5s ease 0.5s forwards;
 }
-@keyframes introFade { to { opacity: 1; transform: translateY(0); } }
+
+@keyframes introFade {
+  to { opacity: 1; transform: translateY(0); }
+}
 
   /* --- Bewegliche Video-Wand --- */
 #videowall {
