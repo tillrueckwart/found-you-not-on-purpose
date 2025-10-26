@@ -200,6 +200,8 @@ section.intro {
   height: 100%;
   border: none;
   border-radius: 8px;
+  transform: scale(0.75); 
+  transform-origin: center;
   object-fit: contain;
   pointer-events: none;
 }
