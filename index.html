@@ -181,20 +181,49 @@ section.map iframe {
   color: #fff;
   border: 0;
 }
-    /* --- Audio Toggle Button --- */
- #audioToggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 100;
-      border-radius: 999px;
-      padding: 10px 16px;
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-      border: 1px solid #999;
-      cursor: pointer;
-      font-size: 1rem;
-    }
+   /* --- Audio Toggle Button im Stil der Hint-Schrift --- */
+#audioToggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  font-family: system-ui, sans-serif;
+  font-size: clamp(0.9rem, 1.2vw, 1.2rem);
+  color: #fff;
+  background: transparent;
+  border: 1.5px solid rgba(255, 0, 0, 0.5);
+  -webkit-text-stroke: 1px rgba(255, 0, 0, 0.4);
+  text-stroke: 1px rgba(255, 0, 0, 0.4);
+  border-radius: 50px;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-shadow:
+    0 0 10px rgba(255, 0, 0, 0.3),
+    0 0 20px rgba(255, 0, 0, 0.2);
+  box-shadow:
+    0 0 10px rgba(255, 0, 0, 0.2),
+    inset 0 0 10px rgba(255, 0, 0, 0.2);
+  transition: all 0.4s ease;
+}
+
+/* Zustand: Sound AN (leuchtet stärker) */
+#audioToggle.active {
+  border-color: rgba(255, 0, 0, 0.9);
+  text-shadow:
+    0 0 15px rgba(255, 0, 0, 0.8),
+    0 0 40px rgba(255, 0, 0, 0.6);
+  box-shadow:
+    0 0 25px rgba(255, 0, 0, 0.7),
+    inset 0 0 15px rgba(255, 0, 0, 0.5);
+  transform: scale(1.05);
+}
+
+/* Hover: sanftes Aufglühen */
+#audioToggle:hover {
+  box-shadow:
+    0 0 25px rgba(255, 0, 0, 0.5),
+    inset 0 0 10px rgba(255, 0, 0, 0.3);
+}
   </style>
 </head>
 <body>
@@ -340,22 +369,24 @@ section.map iframe {
     window.addEventListener('keydown', unmuteOnUserAction, { once:true });
 
     // 4️⃣ Button bleibt Bedienelement
-    btn.addEventListener('click', async () => {
-      if (!playing) {
-        try {
-          await audio.play();
-          playing = true;
-          btn.textContent = '⏸ sound';
-          btn.setAttribute('aria-pressed','true');
-        } catch (err) {
-          console.warn('Play-Fehler:', err);
-        }
-      } else {
-        audio.pause();
-        playing = false;
-        btn.textContent = '▶ sound';
-        btn.setAttribute('aria-pressed','false');
-      }
+   btn.addEventListener('click', async () => {
+  if (!playing) {
+    try {
+      await audio.play();
+      playing = true;
+      btn.textContent = '⏸ sound';
+      btn.setAttribute('aria-pressed', 'true');
+      btn.classList.add('active'); // 🔴 Leuchten aktivieren
+    } catch (err) {
+      console.warn('Play-Fehler:', err);
+    }
+  } else {
+    audio.pause();
+    playing = false;
+    btn.textContent = '▶ sound';
+    btn.setAttribute('aria-pressed', 'false');
+    btn.classList.remove('active'); // 🔴 Leuchten deaktivieren
+  }
     });
   });
   </script>
