@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>i found you not on purpose</title>
   <style>
-    <style>
 /* === Lokale Fonts: Outfit Regular + Bold === */
 @font-face {
   font-family: 'Outfit';
@@ -50,8 +49,8 @@
     }
     
 section.spacer {
-  min-height: auto !important; /* überschreibt die 100vh aus der globalen Regel */
-  height: 250px;
+  min-height: 100px;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -59,7 +58,6 @@ section.spacer {
   width: 100%;              /* volle Breite der Seite */
   background: #000;
   color: rgba(255, 255, 255, 0.6);
-  font-family: system-ui, sans-serif;
   text-align: center;
   user-select: none;
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
@@ -93,10 +91,11 @@ section.spacer h3 {
 }
 
 /* Stil für Absatz */
+/* global shared look */
 section.spacer p,
-.caption p,
-#videowall .background-text {
-  color: rgba(255,228,225, 0.9); /* zart-rosa Füllung */
+#videowall .background-text,
+.caption p {
+  color: rgba(255,228,225, 0.9);
   text-shadow:
     0 0 6px rgba(255, 0, 0, 0.15),
     0 0 12px rgba(255, 0, 0, 0.08);
@@ -106,10 +105,11 @@ section.spacer p,
   letter-spacing: 0.01em;
   opacity: 0.9;
 }
-    
-section.spacer p {
-text-align: center;
-}
+
+/* individual adjustments */
+section.spacer p { text-align: center; }
+.caption p { font-size: clamp(1rem, 1.5vw, 1.6rem); line-height: 1.3; }
+
 /* --- Intro --- */
 section.intro {
   min-height: 100vh;
@@ -130,27 +130,20 @@ section.intro {
   opacity: 0;
 }
 
-/* --- UNTERTEXT --- */
 .intro-content p,
 .intro-content .hint {
- color: #fff;
-  -webkit-text-stroke: 0;
-  text-stroke: 0;
+  color: #fff;
   text-shadow: none;
   font-size: clamp(1rem, 1.6vw, 1.8rem);
   line-height: 1.1;
   margin: 0.4rem 0;
 }
 
-/* --- Hinweis kleiner & dezenter --- */
 .intro-content .hint {
   font-size: clamp(0.8rem, 1.2vw, 1.2rem);
   opacity: 0.8;
-  color: #fff;
-  -webkit-text-stroke: 0;
-  text-stroke: 0;
-  text-shadow: none;
 }
+
 
 /* --- Animationen --- */
 @keyframes introFadeIn {
@@ -328,13 +321,6 @@ section.map iframe {
   width: 35%;
 }
 
-/* Für die Caption-Texte leicht größer, da sie kompakter stehen */
-.caption p {
-  font-size: clamp(1rem, 1.5vw, 1.6rem);
-  line-height: 1.3;
-}
-
-/* === QR-Code-Styling (final & funktionsfähig) === */
 .caption img {
   display: block;
   width: 40%;
@@ -345,17 +331,25 @@ section.map iframe {
   border: 2px solid crimson;
   border-radius: 8px;
 
-  /* 🩸 Roter Leuchteffekt */
+  /* ✨ Roter Glow */
   box-shadow:
-    0 0 20px rgba(255, 0, 0, 0.3),
-    0 0 40px rgba(255, 0, 0, 0.15),
-    inset 0 0 10px rgba(255, 0, 0, 0.25);
+    0 0 30px rgba(255, 0, 0, 0.5),
+    0 0 60px rgba(255, 0, 0, 0.25),
+    inset 0 0 15px rgba(255, 0, 0, 0.35);
 
-  /* ✨ leichte Transparenz nur fürs Bild (nicht für Rahmen!) */
-  background-color: rgba(255, 255, 255, 0.7);
-  filter: brightness(0.9) contrast(0.9) opacity(0.7); /* kontrollierte Transparenz */
+  /* ⚡ Heller, kontrastreicher QR */
+  background-color: rgba(255, 255, 255, 0.9);
+  filter: brightness(1) contrast(1.1) opacity(0.9);
   transition: all 0.4s ease;
 }
+
+.caption img:hover {
+  box-shadow:
+    0 0 50px rgba(255, 0, 0, 0.7),
+    inset 0 0 20px rgba(255, 0, 0, 0.4);
+  filter: brightness(1.1) contrast(1.2) opacity(1);
+}
+
 /* === 🔴 Einheitlicher Neon-Text-Look === */
 .neon-text {
   position: relative;
