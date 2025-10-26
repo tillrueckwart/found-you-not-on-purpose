@@ -422,12 +422,24 @@ p.neon-text {
     max-width: 90%;
   }
 
+@media (max-width: 600px) {
+  section.spacer > * {
+    max-width: 90%;
+  }
+
   /* 📱 Mobile Layout für Bilder mit Text */
   .image-block.with-text {
     flex-direction: column;
     align-items: center;
-    text-align: center; /* sorgt für gleichmäßige Platzierung */
+    text-align: center; /* gesamte Section mittig */
     gap: 1.2rem;
+  }
+
+  /* 🩸 Auch die Richtungsvarianten neutralisieren */
+  .image-block.with-text.left,
+  .image-block.with-text.right {
+    justify-content: center !important;
+    text-align: center !important;
   }
 
   .image-block.with-text img {
@@ -436,7 +448,7 @@ p.neon-text {
   }
 
   .image-block.with-text .caption {
-    width: 90%; /* Textbereich etwas breiter */
+    width: 90%;
     text-align: center;
     order: 2;
     margin-top: 0.8rem;
@@ -449,7 +461,12 @@ p.neon-text {
     line-height: 1.4;
   }
 
-  /* 🔊 Audio-Button kompakter */
+  .caption img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
   #audioToggle {
     bottom: 10px;
     right: 10px;
@@ -457,6 +474,7 @@ p.neon-text {
     padding: 8px 16px;
   }
 }
+
 
   </style>
 </head>
