@@ -123,8 +123,7 @@ section.spacer p {
 #videowall .background-text {
   text-align: center;
   max-width: 90vw;
-  margin: 0 auto;
-  padding: 10vw;
+  padding: 0 10vw; /* nur seitliches Padding */
   backdrop-filter: blur(4px);
 }
 
@@ -183,8 +182,12 @@ section.intro {
   height: 100vh;
   background: #000;
   overflow: hidden;
-}
 
+  display: flex;
+  align-items: center; /* vertikal zentriert */
+  justify-content: center; /* horizontal zentriert */
+}
+    
 .video-wrapper {
   position: absolute;
   top: 0;
