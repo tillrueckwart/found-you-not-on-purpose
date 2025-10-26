@@ -1,4 +1,4 @@
-/* === Lokale Fonts: Outfit Regular + Bold === */
+<style>/* === Lokale Fonts: Outfit Regular + Bold === */
 @font-face {
   font-family: 'Outfit';
   src: url('assets/fonts/Outfit-Regular.woff2') format('woff2'),
@@ -382,3 +382,4 @@ h3.neon-text {
     padding: 8px 16px;
   }
 }
+</style>
