@@ -134,19 +134,40 @@ section.intro {
   opacity: 0;
 }
 
-/* --- TITEL (h1) --- */
-.intro-content h1 {
+.glow-title {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
   font-size: clamp(2.8rem, 6.5vw, 7rem);
   line-height: 0.9;
   letter-spacing: 0.02em;
-  margin: 0 0 0.5rem 0;
-   color: rgba(255, 192, 203, 0.85); /* 🔹 sanftes Rosa-Rot für Füllung */
-  -webkit-text-stroke: 4px crimson; /* etwas dünnerer Rand */
-  text-stroke: 4px crimson;
-  text-shadow:
-    0 0 15px rgba(255, 0, 0, 0.45),
-    0 0 40px rgba(255, 0, 0, 0.3);
+  margin: 0;
 }
+
+/* — Füllung — */
+.glow-title .fill {
+  position: relative;
+  color: #fff;
+  text-shadow:
+    0 0 20px rgba(255, 0, 0, 0.5),
+    0 0 40px rgba(255, 0, 0, 0.35),
+    0 0 60px rgba(255, 0, 0, 0.25);
+  z-index: 1;
+}
+
+/* — Outline-Ebene — */
+.glow-title .stroke {
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  -webkit-text-stroke: 4px crimson;
+  text-stroke: 4px crimson;
+  z-index: 0;
+  pointer-events: none;
+}
+
 
 /* --- UNTERTEXT --- */
 .intro-content p,
@@ -425,12 +446,16 @@ section.map iframe {
 
 
   <!-- Intro -->
-  <section class="intro">
-  <!-- <img class="intro-bg" src="assets/Salty_Glitches_001.jpg" alt="Intro Background"> -->
+  
+ <section class="intro">
   <div class="intro-content">
-      <h1>i found you not on purpose</h1>
-    </div>
-  </section>
+    <h1 class="glow-title">
+      <span class="fill">i found you not<br>on purpose</span>
+      <span class="stroke">i found you not<br>on purpose</span>
+    </h1>
+  </div>
+</section>
+
 
 <section class="spacer">
 <p>throughout this web installation, you are encountering a series of works orbiting around a transient glitch phenomenon within geovisualization software. 
