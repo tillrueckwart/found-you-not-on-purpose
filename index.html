@@ -417,7 +417,30 @@ p.neon-text {
   to { opacity: 1; transform: translateY(0); }
 }
 
+  /* 💡 HIER KOMMT DIE MEDIA QUERY UNTEN DRAN */
+  @media (max-width: 600px) {
+    section.spacer > * {
+      max-width: 90%;
+    }
 
+    .image-block.with-text img {
+      width: 100%;
+    }
+
+    .image-block.with-text .caption {
+      width: 100%;
+      text-align: center;
+      order: 2;
+      margin-top: 1rem;
+    }
+
+    #audioToggle {
+      bottom: 10px;
+      right: 10px;
+      font-size: 0.9rem;
+      padding: 8px 16px;
+    }
+  }
   </style>
 </head>
 <body>
