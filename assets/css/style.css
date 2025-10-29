@@ -190,7 +190,7 @@ section.intro {
   overflow: hidden;
   border: none;
   border-radius: 8px;
-  transform: scale(0.75); 
+  transform: scale(0.6); 
   transform-origin: center;
   transition: transform 1s linear, z-index 0.5s ease;
 }
@@ -200,7 +200,7 @@ section.intro {
   height: 100%;
   border: none;
   border-radius: 8px;
-  transform: scale(0.75); 
+  transform: scale(0.6); 
   transform-origin: center;
   object-fit: contain;
   pointer-events: none;
