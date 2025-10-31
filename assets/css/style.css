@@ -218,6 +218,7 @@ section.map iframe {
 }
 
 /* --- Hero-Sound-Button mittig unter dem Titel --- */
+/* --- Hero-Sound-Button mittig unter dem Titel --- */
 .sound-btn {
   position: absolute;
   left: 50%;
@@ -255,6 +256,7 @@ section.map iframe {
   transform: translate(-50%, 10px);
   pointer-events: none;
 }
+
 
 
 /* --- Floating Button (Audio-Toggle) --- */
