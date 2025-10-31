@@ -269,9 +269,9 @@ window.addEventListener('DOMContentLoaded', () => {
   if (hero)  hero.addEventListener('click', () => turnSoundOn('hero'));
   if (fab)   fab.addEventListener('click',  toggleFab);
 
-  // 👀 Floating Button anzeigen, sobald der erste section.spacer im Viewport ist
- const secondSeparator = document.querySelector('section.spacer'); // der erste Separator nach Intro
-if (secondSeparator) {
+// 👀 Floating Button anzeigen, sobald die "salty glitches"-Section im Viewport ist
+const saltySection = document.querySelectorAll('section.spacer')[2]; // 0 = nach Intro, 1 = leerer Spacer, 2 = "salty glitches"
+if (saltySection) {
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -280,9 +280,9 @@ if (secondSeparator) {
       }
     });
   }, { threshold: 0.1 });
-  io.observe(secondSeparator);
+  io.observe(saltySection);
 } else {
-  // Fallback: falls kein spacer gefunden, zeige FAB nach kleinem Delay
+  // Fallback: falls nichts gefunden, nach kurzer Zeit zeigen
   setTimeout(() => fab.classList.add('show'), 1200);
 }
 });
