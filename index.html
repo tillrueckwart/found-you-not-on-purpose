@@ -8,7 +8,12 @@
 </head>
 <body>
 
-<audio id="bgAudio" src="assets/stay-longer-bug-1.mp3" loop preload="auto"></audio>
+<audio id="bgAudio"
+       src="assets/stay-longer-bug-1.mp3"
+       loop
+       preload="auto"
+       playsinline
+       muted></audio>
   <button id="audioToggle" aria-pressed="false">sound</button>
 
 
@@ -179,71 +184,96 @@
 <script>
 window.addEventListener('DOMContentLoaded', () => {
   const audio = document.getElementById('bgAudio');
-  const btn = document.getElementById('audioToggle');
+  const btn   = document.getElementById('audioToggle');
+
   let playing = false;
   let unmuted = false;
 
-  // Start stumm (Autoplay erlaubt)
+  // 1) Sicher stumm starten (Autoplay erlaubt)
   audio.muted = true;
   audio.volume = 0;
 
-  // Autoplay beim Laden (stumm)
+  // 2) Versuche Autoplay sofort (stumm)
   window.addEventListener('load', async () => {
     try {
       await audio.play();
       playing = true;
       btn.textContent = 'sound';
       btn.setAttribute('aria-pressed', 'true');
-      console.log('Autoplay (muted) gestartet');
+      console.log('[audio] autoplay muted ok');
     } catch (err) {
-      console.warn('Autoplay blockiert:', err);
+      console.warn('[audio] autoplay blocked:', err);
     }
   });
 
-  // Fade-In Funktion
-  function fadeInAudio() {
-    if (unmuted) return; // schon aktiv
-    unmuted = true;
-    audio.muted = false;
-    console.log('🔊 Sound aktiviert (mit Fade-In)');
-
-    let vol = 0;
-    const target = 0.8;
-    const step = target / 30;
-    const fade = setInterval(() => {
-      vol += step;
-      if (vol >= target) {
-        vol = target;
-        clearInterval(fade);
-      }
-      audio.volume = vol;
-    }, 100);
-
-    // Listener entfernen
-    removeListeners();
+  // 3) Fade-In Helper
+  function fadeIn(to = 0.8, ms = 3000) {
+    const steps = 30;
+    const stepVol = to / steps;
+    const stepMs = ms / steps;
+    let v = 0;
+    const id = setInterval(() => {
+      v += stepVol;
+      if (v >= to) { v = to; clearInterval(id); }
+      audio.volume = v;
+    }, stepMs);
   }
 
-  // Funktion zum Entfernen aller einmaligen Listener
-  function removeListeners() {
-    ['scroll', 'pointerdown', 'touchstart', 'mousemove', 'keydown', 'wheel']
-      .forEach(ev => window.removeEventListener(ev, fadeInAudio));
+  // 4) Einmalige Aktivierung bei *jedem* echten User-Gesture
+  async function activateAudioOnce(e) {
+    if (unmuted) return;
+    try {
+      // Einige Browser (iOS/Safari) verlangen ein play() IM Gesten-Handler
+      // selbst dann, wenn es schon "spielt".
+      await audio.play();
+      audio.muted = false;
+      unmuted = true;
+      console.log('[audio] unmuted via', e.type);
+      fadeIn(0.8, 3000);
+      btn.classList.add('active');
+
+      removeGestureListeners();
+    } catch (err) {
+      console.warn('[audio] play/unmute failed in gesture:', e.type, err);
+      // Wenn unmute scheitert, Button sichtbar "pulse" lassen, damit Nutzer tippt
+      btn.classList.add('active');
+    }
   }
 
-  // Alle möglichen Interaktionen registrieren
-  ['scroll', 'pointerdown', 'touchstart', 'mousemove', 'keydown', 'wheel']
-    .forEach(ev => window.addEventListener(ev, fadeInAudio, { once: true }));
+  function addGestureListeners() {
+    const targets = [window, document];
+    const events  = ['scroll','wheel','touchstart','touchmove','pointerdown','pointermove','keydown','mousemove'];
+    targets.forEach(t => {
+      events.forEach(ev => t.addEventListener(ev, activateAudioOnce, {passive:true, capture:true}));
+    });
+  }
+  function removeGestureListeners() {
+    const targets = [window, document];
+    const events  = ['scroll','wheel','touchstart','touchmove','pointerdown','pointermove','keydown','mousemove'];
+    targets.forEach(t => {
+      events.forEach(ev => t.removeEventListener(ev, activateAudioOnce, {passive:true, capture:true}));
+    });
+  }
+  addGestureListeners();
 
-  // Button-Steuerung
+  // 5) Button bleibt als Kontrolle (Play/Pause)
   btn.addEventListener('click', async () => {
     if (!playing) {
       try {
         await audio.play();
         playing = true;
+        // Beim Button-Klick auch sicher unmute setzen
+        if (!unmuted) {
+          audio.muted = false;
+          unmuted = true;
+          fadeIn(0.8, 1200);
+        }
         btn.textContent = 'sound';
         btn.setAttribute('aria-pressed', 'true');
         btn.classList.add('active');
+        removeGestureListeners();
       } catch (err) {
-        console.warn('Play-Fehler:', err);
+        console.warn('[audio] play error on button:', err);
       }
     } else {
       audio.pause();
