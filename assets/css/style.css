@@ -218,12 +218,18 @@ section.map iframe {
 }
 
 /* --- Hero-Sound-Button mittig unter dem Titel --- */
-/* --- Hero-Sound-Button mittig unter dem Titel --- */
+
+/* Container für Titel + Button */
+.intro-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .sound-btn {
-  position: absolute;
-  left: 50%;
-  bottom:0vh;
-  transform: translateX(-50%);
+  position: relative;
+  margin-top: 4rem; /* ↑ Abstand zwischen Titel und Button */
   z-index: 5;
 
   font-family: 'Outfit', sans-serif;
@@ -253,9 +259,10 @@ section.map iframe {
 
 .sound-btn.hide {
   opacity: 0;
-  transform: translate(-50%, 10px);
+  transform: translateY(10px);
   pointer-events: none;
 }
+
 
 
 
