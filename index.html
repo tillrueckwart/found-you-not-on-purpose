@@ -270,8 +270,8 @@ window.addEventListener('DOMContentLoaded', () => {
   if (fab)   fab.addEventListener('click',  toggleFab);
 
   // 👀 Floating Button anzeigen, sobald der erste section.spacer im Viewport ist
- const firstSeparator = document.querySelector('section.spacer'); // der erste Separator nach Intro
-if (firstSeparator) {
+ const secondSeparator = document.querySelector('section.spacer'); // der erste Separator nach Intro
+if (secondSeparator) {
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -280,7 +280,7 @@ if (firstSeparator) {
       }
     });
   }, { threshold: 0.1 });
-  io.observe(firstSeparator);
+  io.observe(secondSeparator);
 } else {
   // Fallback: falls kein spacer gefunden, zeige FAB nach kleinem Delay
   setTimeout(() => fab.classList.add('show'), 1200);
