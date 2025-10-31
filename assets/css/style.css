@@ -218,9 +218,8 @@ section.map iframe {
 
 /* --- Hero-Sound-Button mittig unter dem Titel --- */
 .sound-btn {
-  position: absolute;
+  position: bottom;
   left: 50%;
-  bottom: 2vh; /* etwas Abstand unterhalb des Titels */
   transform: translateX(-50%);
   z-index: 5;
 
