@@ -177,80 +177,85 @@
 </section>
  <section class="spacer"></section>
 <script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const audio = document.getElementById('bgAudio');
-    const btn = document.getElementById('audioToggle');
-    let playing = false;
+window.addEventListener('DOMContentLoaded', () => {
+  const audio = document.getElementById('bgAudio');
+  const btn = document.getElementById('audioToggle');
+  let playing = false;
+  let unmuted = false;
 
-    // 1️⃣ Stumm starten → Autoplay erlaubt
-    audio.muted = true;
-    audio.volume = 0; // wir starten komplett leise
+  // Start stumm (Autoplay erlaubt)
+  audio.muted = true;
+  audio.volume = 0;
 
-    // 2️⃣ Autoplay beim Laden (stumm)
-    window.addEventListener('load', async () => {
-      try {
-        await audio.play();
-        playing = true;
-        btn.textContent = 'sound';
-        btn.setAttribute('aria-pressed', 'true');
-        console.log('Autoplay (muted) gestartet');
-      } catch (err) {
-        console.warn('Autoplay blockiert:', err);
-      }
-    });
-
-    // 3️⃣ Erste Nutzeraktion → Sound aktivieren + Fade-In
-    function unmuteOnUserAction() {
-      if (audio.muted) {
-        audio.muted = false;
-        console.log('🔊 Sound aktiviert (mit Fade-In)');
-
-        // Füge Fade-In hinzu: Lautstärke 0 → 0.8 über 3s
-        let vol = 0;
-        const target = 0.8;
-        const step = target / 30; // 30 Schritte = ~3s (100ms pro Schritt)
-        const fade = setInterval(() => {
-          vol += step;
-          if (vol >= target) {
-            vol = target;
-            clearInterval(fade);
-          }
-          audio.volume = vol;
-        }, 100);
-      }
-
-      // einmalige Listener
-      window.removeEventListener('scroll', unmuteOnUserAction);
-      window.removeEventListener('pointerdown', unmuteOnUserAction);
-      window.removeEventListener('keydown', unmuteOnUserAction);
-    }
-
-    window.addEventListener('scroll', unmuteOnUserAction, { once:true });
-    window.addEventListener('pointerdown', unmuteOnUserAction, { once:true });
-    window.addEventListener('keydown', unmuteOnUserAction, { once:true });
-
-    // 4️⃣ Button bleibt Bedienelement
-   btn.addEventListener('click', async () => {
-  if (!playing) {
+  // Autoplay beim Laden (stumm)
+  window.addEventListener('load', async () => {
     try {
       await audio.play();
       playing = true;
       btn.textContent = 'sound';
       btn.setAttribute('aria-pressed', 'true');
-      btn.classList.add('active'); // 🔴 Leuchten aktivieren
+      console.log('Autoplay (muted) gestartet');
     } catch (err) {
-      console.warn('Play-Fehler:', err);
+      console.warn('Autoplay blockiert:', err);
     }
-  } else {
-    audio.pause();
-    playing = false;
-    btn.textContent = 'sound';
-    btn.setAttribute('aria-pressed', 'false');
-    btn.classList.remove('active'); // 🔴 Leuchten deaktivieren
-  }
-    });
   });
-  </script>
+
+  // Fade-In Funktion
+  function fadeInAudio() {
+    if (unmuted) return; // schon aktiv
+    unmuted = true;
+    audio.muted = false;
+    console.log('🔊 Sound aktiviert (mit Fade-In)');
+
+    let vol = 0;
+    const target = 0.8;
+    const step = target / 30;
+    const fade = setInterval(() => {
+      vol += step;
+      if (vol >= target) {
+        vol = target;
+        clearInterval(fade);
+      }
+      audio.volume = vol;
+    }, 100);
+
+    // Listener entfernen
+    removeListeners();
+  }
+
+  // Funktion zum Entfernen aller einmaligen Listener
+  function removeListeners() {
+    ['scroll', 'pointerdown', 'touchstart', 'mousemove', 'keydown', 'wheel']
+      .forEach(ev => window.removeEventListener(ev, fadeInAudio));
+  }
+
+  // Alle möglichen Interaktionen registrieren
+  ['scroll', 'pointerdown', 'touchstart', 'mousemove', 'keydown', 'wheel']
+    .forEach(ev => window.addEventListener(ev, fadeInAudio, { once: true }));
+
+  // Button-Steuerung
+  btn.addEventListener('click', async () => {
+    if (!playing) {
+      try {
+        await audio.play();
+        playing = true;
+        btn.textContent = 'sound';
+        btn.setAttribute('aria-pressed', 'true');
+        btn.classList.add('active');
+      } catch (err) {
+        console.warn('Play-Fehler:', err);
+      }
+    } else {
+      audio.pause();
+      playing = false;
+      btn.textContent = 'sound';
+      btn.setAttribute('aria-pressed', 'false');
+      btn.classList.remove('active');
+    }
+  });
+});
+</script>
+
 <script>
 const wrappers = document.querySelectorAll('.video-wrapper');
 const speeds = [];
