@@ -122,7 +122,6 @@ section.spacer p {
 /* --- Intro --- */
 section.intro {
 position: relative;
-  bottom: 10vh;
   min-height: 100vh;
   display: flex;
   align-items: center;   /* vertikal zentriert */
@@ -136,6 +135,7 @@ position: relative;
 
 /* Inhalt */
 .intro-content {
+    bottom: 10vh;
   max-width: 900px;
   animation: textFade 1.4s ease-out 0.3s forwards;
   opacity: 0;
