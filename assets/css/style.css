@@ -216,11 +216,14 @@ section.map iframe {
   border: 0;
 }
 
+/* --- Hero-Sound-Button mittig unter dem Titel --- */
 .sound-btn {
   position: absolute;
-  right: 2rem;
-  bottom: 2rem;
+  left: 50%;
+  bottom: 8vh; /* etwas Abstand unterhalb des Titels */
+  transform: translateX(-50%);
   z-index: 5;
+
   font-family: 'Outfit', sans-serif;
   font-weight: 700;
   font-size: clamp(0.9rem, 1.2vw, 1.2rem);
@@ -239,8 +242,19 @@ section.map iframe {
     inset 0 0 10px rgba(255, 0, 0, 0.2);
   transition: opacity .4s ease, transform .4s ease, box-shadow .4s ease;
 }
-.sound-btn:hover { box-shadow: 0 0 30px rgba(255,0,0,0.5), inset 0 0 12px rgba(255,0,0,0.3); }
-.sound-btn.hide   { opacity: 0; transform: translateY(6px); pointer-events: none; }
+
+.sound-btn:hover {
+  box-shadow:
+    0 0 30px rgba(255,0,0,0.5),
+    inset 0 0 12px rgba(255,0,0,0.3);
+}
+
+.sound-btn.hide {
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  pointer-events: none;
+}
+
 
 /* --- Floating Button (Audio-Toggle) --- */
 #audioToggle {
@@ -582,5 +596,6 @@ p.neon-text {
     font-size: 0.9rem;
     padding: 8px 16px;
   }
-  .sound-btn { right: 1rem; bottom: 1rem; }
+  .sound-btn {
+    bottom: 5vh;}
 }
