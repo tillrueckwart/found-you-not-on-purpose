@@ -270,22 +270,21 @@ window.addEventListener('DOMContentLoaded', () => {
   if (fab)   fab.addEventListener('click',  toggleFab);
 
   // 👀 Floating Button anzeigen, sobald der erste section.spacer im Viewport ist
-  const firstSeparator = document.querySelector('section.spacer'); // der erste Separator nach Intro
-  if (firstSeparator) {
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          fab.classList.add('show');   // sichtbar machen
-        } else {
-          fab.classList.remove('show'); // wieder verbergen, wenn gewünscht
-        }
-      });
-    }, { threshold: 0.1 });
-    io.observe(firstSeparator);
-  } else {
-    // Fallback: falls kein spacer gefunden, zeige FAB nach kleinem Delay
-    setTimeout(() => fab.classList.add('show'), 1200);
-  }
+ const firstSeparator = document.querySelector('section.spacer'); // der erste Separator nach Intro
+if (firstSeparator) {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        fab.classList.add('show');   // sichtbar machen
+        io.disconnect(); // ✅ Beobachtung beenden → bleibt dauerhaft sichtbar
+      }
+    });
+  }, { threshold: 0.1 });
+  io.observe(firstSeparator);
+} else {
+  // Fallback: falls kein spacer gefunden, zeige FAB nach kleinem Delay
+  setTimeout(() => fab.classList.add('show'), 1200);
+}
 });
 </script>
 
