@@ -186,33 +186,33 @@
 <script>
 window.addEventListener('DOMContentLoaded', () => {
   const audio = document.getElementById('bgAudio');
-  const btn   = document.getElementById('audioToggle');
+  const fab   = document.getElementById('audioToggle'); // Floating Button unten rechts
+  const hero  = document.getElementById('soundHero');    // Button unter Titel
 
-  let playing = false;
-  let unmuted = false;
+  let primed  = false;  // ob autoplay (muted) läuft
+  let unmuted = false;  // ob Sound schon freigeschaltet wurde
+  let playing = false;  // ob audio.play() aktiv ist
 
-  // 1) Sicher stumm starten (Autoplay erlaubt)
+  // Sicher stumm starten – Autoplay erlaubt
   audio.muted = true;
   audio.volume = 0;
 
-  // 2) Versuche Autoplay sofort (stumm)
+  // Versuch: Autoplay muted beim Laden (primen, damit später kein Lag)
   window.addEventListener('load', async () => {
     try {
       await audio.play();
+      primed = true;
       playing = true;
-      btn.textContent = 'sound';
-      btn.setAttribute('aria-pressed', 'true');
       console.log('[audio] autoplay muted ok');
     } catch (err) {
       console.warn('[audio] autoplay blocked:', err);
     }
   });
 
-  // 3) Fade-In Helper
-  function fadeIn(to = 0.8, ms = 3000) {
+  function fadeIn(to = 0.8, ms = 1200) {
     const steps = 30;
     const stepVol = to / steps;
-    const stepMs = ms / steps;
+    const stepMs  = ms / steps;
     let v = 0;
     const id = setInterval(() => {
       v += stepVol;
@@ -221,72 +221,74 @@ window.addEventListener('DOMContentLoaded', () => {
     }, stepMs);
   }
 
-  // 4) Einmalige Aktivierung bei *jedem* echten User-Gesture
-  async function activateAudioOnce(e) {
-    if (unmuted) return;
-    try {
-      // Einige Browser (iOS/Safari) verlangen ein play() IM Gesten-Handler
-      // selbst dann, wenn es schon "spielt".
-      await audio.play();
-      audio.muted = false;
-      unmuted = true;
-      console.log('[audio] unmuted via', e.type);
-      fadeIn(0.8, 3000);
-      btn.classList.add('active');
-
-      removeGestureListeners();
-    } catch (err) {
-      console.warn('[audio] play/unmute failed in gesture:', e.type, err);
-      // Wenn unmute scheitert, Button sichtbar "pulse" lassen, damit Nutzer tippt
-      btn.classList.add('active');
+  async function ensurePlay() {
+    if (!playing) {
+      try { await audio.play(); playing = true; } catch (e) { console.warn('[audio] play failed:', e); }
     }
   }
 
-  function addGestureListeners() {
-    const targets = [window, document];
-    const events  = ['scroll','wheel','touchstart','touchmove','pointerdown','pointermove','keydown','mousemove'];
-    targets.forEach(t => {
-      events.forEach(ev => t.addEventListener(ev, activateAudioOnce, {passive:true, capture:true}));
-    });
-  }
-  function removeGestureListeners() {
-    const targets = [window, document];
-    const events  = ['scroll','wheel','touchstart','touchmove','pointerdown','pointermove','keydown','mousemove'];
-    targets.forEach(t => {
-      events.forEach(ev => t.removeEventListener(ev, activateAudioOnce, {passive:true, capture:true}));
-    });
-  }
-  addGestureListeners();
+  // 🔊 Aktion: Sound einschalten (von einem Button aus)
+  async function turnSoundOn(source = 'hero') {
+    await ensurePlay();
+    audio.muted = false;
+    unmuted = true;
+    fadeIn(0.8, 1200);
 
-  // 5) Button bleibt als Kontrolle (Play/Pause)
-  btn.addEventListener('click', async () => {
-    if (!playing) {
-      try {
-        await audio.play();
-        playing = true;
-        // Beim Button-Klick auch sicher unmute setzen
-        if (!unmuted) {
-          audio.muted = false;
-          unmuted = true;
-          fadeIn(0.8, 1200);
-        }
-        btn.textContent = 'sound';
-        btn.setAttribute('aria-pressed', 'true');
-        btn.classList.add('active');
-        removeGestureListeners();
-      } catch (err) {
-        console.warn('[audio] play error on button:', err);
-      }
-    } else {
+    // Hero-Button sanft ausblenden
+    if (source === 'hero' && hero) {
+      hero.classList.add('hide');
+      setTimeout(() => hero.remove(), 450);
+    }
+
+    // Floating Button aktiv markieren
+    fab.classList.add('active');
+    fab.setAttribute('aria-pressed', 'true');
+  }
+
+  // 📴 Optional: Toggle auf dem Floating Button (Play/Pause)
+  async function toggleFab() {
+    if (!unmuted) {
+      await turnSoundOn('fab');
+      return;
+    }
+    if (playing) {
       audio.pause();
       playing = false;
-      btn.textContent = 'sound';
-      btn.setAttribute('aria-pressed', 'false');
-      btn.classList.remove('active');
+      fab.classList.remove('active');
+      fab.setAttribute('aria-pressed', 'false');
+    } else {
+      await ensurePlay();
+      audio.muted = false;
+      playing = true;
+      fab.classList.add('active');
+      fab.setAttribute('aria-pressed', 'true');
     }
-  });
+  }
+
+  // Klicks
+  if (hero)  hero.addEventListener('click', () => turnSoundOn('hero'));
+  if (fab)   fab.addEventListener('click',  toggleFab);
+
+  // 👀 Floating Button anzeigen, sobald der erste section.spacer im Viewport ist
+  const firstSeparator = document.querySelector('section.spacer'); // der erste Separator nach Intro
+  if (firstSeparator) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          fab.classList.add('show');   // sichtbar machen
+        } else {
+          fab.classList.remove('show'); // wieder verbergen, wenn gewünscht
+        }
+      });
+    }, { threshold: 0.1 });
+    io.observe(firstSeparator);
+  } else {
+    // Fallback: falls kein spacer gefunden, zeige FAB nach kleinem Delay
+    setTimeout(() => fab.classList.add('show'), 1200);
+  }
 });
 </script>
+
 
 <script>
 const wrappers = document.querySelectorAll('.video-wrapper');
