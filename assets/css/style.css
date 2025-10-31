@@ -597,6 +597,6 @@ p.neon-text {
     padding: 8px 16px;
   }
   .sound-btn {
-    bottom: 10vh;
+    bottom: 0vh;
   }
 }
