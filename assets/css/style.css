@@ -220,7 +220,7 @@ section.map iframe {
 .sound-btn {
   position: absolute;
   left: 50%;
-  bottom: 18vh; /* etwas Abstand unterhalb des Titels */
+  bottom: 2vh; /* etwas Abstand unterhalb des Titels */
   transform: translateX(-50%);
   z-index: 5;
 
