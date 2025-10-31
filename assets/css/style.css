@@ -609,4 +609,15 @@ p.neon-text {
   .sound-btn {
     margin-top: 2.5rem;
   }
+    /* 🎞️ Videos in mobiler Ansicht etwas größer darstellen */
+  .video-wrapper {
+    width: 40vw;           /* vorher: 25vw */
+    aspect-ratio: 4 / 3;
+    transform: scale(0.9); /* leicht größer, aber nicht überlappend */
+  }
+
+  .video-wrapper iframe {
+    border-radius: 6px;
+  }
+
 }
