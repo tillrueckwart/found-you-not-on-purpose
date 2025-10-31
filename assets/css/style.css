@@ -122,6 +122,7 @@ section.spacer p {
 /* --- Intro --- */
 section.intro {
 position: relative;
+  bottom: 10vh;
   min-height: 100vh;
   display: flex;
   align-items: center;   /* vertikal zentriert */
