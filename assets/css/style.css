@@ -229,7 +229,7 @@ section.map iframe {
 
 .sound-btn {
   position: relative;
-  margin-top: 4rem; /* ↑ Abstand zwischen Titel und Button */
+  margin-top: 3rem; /* ↑ Abstand zwischen Titel und Button */
   z-index: 5;
 
   font-family: 'Outfit', sans-serif;
