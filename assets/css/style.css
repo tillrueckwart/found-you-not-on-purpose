@@ -172,7 +172,7 @@ section.intro {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: #000;
+  background: rgba(216, 216, 216, 1);
   overflow: hidden;
 
   display: flex;
