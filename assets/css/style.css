@@ -22,7 +22,7 @@
       padding: 0;
       height: 100%;
       overflow-x: hidden;
-      background: #000;
+      background: rgba(216, 216, 216, 1);
       color: #fff;
      font-family: 'Outfit', sans-serif;
      font-weight: 400; /* Standardgewicht für Fließtext */
@@ -49,7 +49,7 @@ section.spacer {
   justify-content: center;
   align-items: center;
   width: 100%;              /* volle Breite der Seite */
-  background: #000;
+  background: rgba(216, 216, 216, 1);
   color: rgba(255, 255, 255, 0.6);
   text-align: center;
   user-select: none;
@@ -87,7 +87,7 @@ section.spacer h3 {
 section.spacer p,
 .caption p,
 #videowall .background-text {
-  color: rgba(255,228,225, 0.9); /* zart-rosa */
+  color: rgba(152, 251, 152, 0.9);/* rgba(255,228,225, 0.9);/* zart-rosa */
   font-family: 'Outfit', sans-serif;
   font-weight: 400;
   font-size: clamp(1rem, 1.5vw, 1.6rem); /* Einheitlich skaliert */
